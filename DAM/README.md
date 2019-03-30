@@ -13,8 +13,6 @@ Este repositorio ha sido creado con la intención de ilustrar con ejemplos ejerc
 
 &copy; David Salazar - 2019
 
-Made with &hearts; from Madrid.
-
 <div id="temas"/>
 
 ## Temas
