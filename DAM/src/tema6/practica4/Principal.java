@@ -44,7 +44,7 @@ public class Principal extends JFrame {
 
 	public void changeIcon() {
 		Toolkit pantalla = Toolkit.getDefaultToolkit();
-		Image icono = pantalla.getImage("resources/img-icon-interface.png");
+		Image icono = pantalla.getImage("resources/descarga.png");
 		setIconImage(icono);
 	}
 
