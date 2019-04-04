@@ -64,8 +64,8 @@ public class Ventana extends JFrame {
 		Dimension tpantalla = pantalla.getScreenSize();
 		int altura = tpantalla.height;
 		int ancho = tpantalla.width;
-		setSize(ancho / 2, altura / 2);
-		setLocation(ancho / 4, altura / 4);
+		setSize(ancho, altura / 2);
+		setLocation(0,altura / 4);
 
 	}
 
