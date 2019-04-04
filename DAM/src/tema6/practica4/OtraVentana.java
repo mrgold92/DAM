@@ -16,7 +16,6 @@ public class OtraVentana extends JFrame {
 		setTitle("Segunda ventana");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 600);
-
 		setLocationRelativeTo(null);
 
 		Main.changeIcon(this, "hp.jpeg");
@@ -37,7 +36,6 @@ public class OtraVentana extends JFrame {
 		lamina.setLayout(new BorderLayout());
 		lamina.setBackground(newColor);
 		lamina.add(nivel);
-		lamina.add(nivel, BorderLayout.CENTER);
 
 		OtraVentana.this.add(lamina);
 
