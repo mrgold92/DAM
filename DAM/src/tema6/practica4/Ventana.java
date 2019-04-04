@@ -39,7 +39,6 @@ public class Ventana extends JFrame {
 		JButton btnNuevaVentana = new JButton("Nueva ventana");
 		btnNuevaVentana.setForeground(Color.WHITE);
 		btnNuevaVentana.setBackground(SystemColor.desktop);
-
 		btnNuevaVentana.setFocusPainted(false);
 		btnNuevaVentana.setSize(200, 30);
 
