@@ -23,9 +23,7 @@ public class Ventana extends JFrame {
 		// setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		add(contentPane);
-		
+
 		contentPane.setLayout(new GridBagLayout());
 
 		contentPane.add(crearBoton());
@@ -33,10 +31,12 @@ public class Ventana extends JFrame {
 		setResizable(false);
 		centrar();
 
+		add(contentPane);
+
 		getIconImage();
+
 		setVisible(true);
-		
-		
+
 	}
 
 	public JButton crearBoton() {
@@ -69,7 +69,7 @@ public class Ventana extends JFrame {
 		int altura = tpantalla.height;
 		int ancho = tpantalla.width;
 		setSize(ancho, altura / 2);
-		setLocation(ancho / altura ,altura / 4);
+		setLocation(ancho / altura, altura / 4);
 
 	}
 

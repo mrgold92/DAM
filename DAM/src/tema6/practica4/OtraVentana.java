@@ -1,7 +1,13 @@
 package tema6.practica4;
 
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.nio.ByteOrder;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,36 +18,33 @@ public class OtraVentana extends JFrame {
 
 	public OtraVentana() {
 
-		setLayout(new GridBagLayout());
 		setTitle("Segunda ventana");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 600);
+		setSize(600, 600);
+
 		setLocationRelativeTo(null);
 
 		Main.changeIcon(this, "hp.jpeg");
-
+		setBackground(Color.white);
 		initComponents();
+
 		setVisible(true);
 	}
 
 	public void initComponents() {
 
-		JPanel laminas = new JPanel();
+		JPanel lamina = new JPanel();
+		JLabel nivel = new JLabel("Texto creado", JLabel.CENTER);
+		Color newColor = new Color(53, 103, 132);
 
-		crearTexto(laminas);
-		OtraVentana.this.add(laminas);
+		nivel.setForeground(Color.white);
 
-	}
+		lamina.setLayout(new BorderLayout());
+		lamina.setBackground(newColor);
+		lamina.add(nivel);
+		lamina.add(nivel, BorderLayout.CENTER);
 
-	public void crearTexto(JPanel caja) {
-
-		JLabel nivel = new JLabel();
-
-		nivel.setText("Nuevo texto creado.");
-
-		nivel.setBounds(100, 50, 50, 50);
-
-		caja.add(nivel);
+		OtraVentana.this.add(lamina);
 
 	}
 
