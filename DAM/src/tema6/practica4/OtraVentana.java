@@ -2,12 +2,7 @@ package tema6.practica4;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.nio.ByteOrder;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
