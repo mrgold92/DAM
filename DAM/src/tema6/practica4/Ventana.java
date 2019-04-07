@@ -33,8 +33,6 @@ public class Ventana extends JFrame {
 
 		add(contentPane);
 
-		getIconImage();
-
 		setVisible(true);
 
 	}
