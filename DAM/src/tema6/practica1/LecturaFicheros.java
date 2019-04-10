@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Clase principal del tema 6 de programaciï¿½n. Se encargarán de leer y escribir
+ * Clase principal del tema 6 de programaciï¿½n. Se encargarï¿½n de leer y escribir
  * sobre los ficheros guardados en resources/
  * 
  * @author david
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class LecturaFicheros {
 
 	/**
-	 * Método principal de la aplicaciï¿½n.
+	 * MÃ©todo principal de la aplicaciï¿½n.
 	 * 
 	 * @param args
 	 * @throws IOException
