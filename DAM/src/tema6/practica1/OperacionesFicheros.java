@@ -20,9 +20,9 @@ import java.util.ArrayList;
 public class OperacionesFicheros {
 
 	/**
-	 * M�todo que se encarga de leer un arrayList de caracteres que forman un texto
+	 * Método que se encarga de leer un arrayList de caracteres que forman un texto
 	 * completo, se encarga de comprobar si un caracter del texto, es una vocal y de
-	 * ser as�, qu� vocal es, aumentando su contador.
+	 * ser así, qué vocal es, aumentando su contador.
 	 * 
 	 * @param texto ArrayList<Character> que recibe cada caracter de un texto.
 	 */
@@ -99,7 +99,7 @@ public class OperacionesFicheros {
 	}
 
 	/**
-	 * M�todo que lee una imagen y hacer una copia de la misma mediante bytes.
+	 * Método que lee una imagen y hacer una copia de la misma mediante bytes.
 	 * 
 	 * @param ruta_img
 	 * @param nombre_imagen_copia

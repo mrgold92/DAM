@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class LecturaFicheros {
 
 	/**
-	 * Método principal de la aplicaci�n.
+	 * Método principal de la aplicación.
 	 * 
 	 * @param args
 	 * @throws IOException
