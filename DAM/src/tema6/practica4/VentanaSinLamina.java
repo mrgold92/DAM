@@ -1,7 +1,6 @@
 package tema6.practica4;
 
 import java.awt.Color;
-import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
