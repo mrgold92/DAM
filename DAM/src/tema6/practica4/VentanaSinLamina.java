@@ -34,7 +34,7 @@ public class VentanaSinLamina extends JFrame {
 		nombre.setBounds(300, 210, 200, 20);
 		add(nombre);
 		
-		JLabel passEtiqueta = new JLabel("Introduce tu contraseña");
+		JLabel passEtiqueta = new JLabel("Introduce tu contraseÃ±a");
 		add(passEtiqueta);
 		
 		passEtiqueta.setBounds(100, 240, 200, 40);
