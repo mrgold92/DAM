@@ -26,7 +26,28 @@ public class Ventana extends JFrame {
 
 		contentPane.setLayout(new GridBagLayout());
 
-		contentPane.add(crearBoton());
+		// Btn nueva ventana
+
+		JButton btnNuevaVentana = new JButton("Nueva ventana");
+		btnNuevaVentana.setForeground(Color.WHITE);
+		btnNuevaVentana.setBackground(SystemColor.desktop);
+		btnNuevaVentana.setFocusPainted(false);
+		btnNuevaVentana.setSize(200, 30);
+
+		eventosBtn(btnNuevaVentana);
+		contentPane.add(btnNuevaVentana);
+
+		// Ventana sin lamina
+
+		JButton btnVentanaSinLamina = new JButton("Formulario");
+		btnVentanaSinLamina.setForeground(Color.white);
+		btnVentanaSinLamina.setBackground(SystemColor.desktop);
+		btnVentanaSinLamina.setFocusPainted(false);
+		btnVentanaSinLamina.setSize(200, 30);
+
+		llamarVentanaSinLamina(btnVentanaSinLamina);
+		contentPane.add(btnVentanaSinLamina);
+
 		Main.changeIcon(this, "descarga.png");
 		setResizable(false);
 		centrar();
@@ -37,16 +58,13 @@ public class Ventana extends JFrame {
 
 	}
 
-	public JButton crearBoton() {
-		JButton btnNuevaVentana = new JButton("Nueva ventana");
-		btnNuevaVentana.setForeground(Color.WHITE);
-		btnNuevaVentana.setBackground(SystemColor.desktop);
-		btnNuevaVentana.setFocusPainted(false);
-		btnNuevaVentana.setSize(200, 30);
-
-		eventosBtn(btnNuevaVentana);
-
-		return btnNuevaVentana;
+	public void llamarVentanaSinLamina(JButton btn) {
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Ventana.this.dispose();
+				new VentanaSinLamina();
+			}
+		});
 	}
 
 	public void eventosBtn(JButton btn) {
