@@ -67,16 +67,26 @@ public class VentanaPrimitiva extends JFrame {
 
 		generar.addActionListener(new ActionListener() {
 
-			Integer aleatorio = null;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Integer aleatoriop = 0, aleatorio2 = 0;
+
+				//rellenamos el array con números aleatorios
 				for (int i = 0; i < textos.length; i++) {
+					aleatoriop = (int) (Math.random() * 100);
+					textos[i].setText(aleatoriop.toString());
+				}
 
-					aleatorio = (int) (Math.random() * 50);
+				//Quitamos coincidencias.
+				for (int i = 0; i < textos.length; i++) {
+					for (int j = 0; j < textos.length; j++) {
+						if (textos[i].getText().equals(textos[j].getText()) && i != j) {
+							aleatorio2 = (int) (Math.random() * 100);
+							textos[i].setText(aleatorio2.toString());
+							i = 0;
+						}
 
-					textos[i].setText(aleatorio.toString());
-
+					}
 				}
 
 			}
