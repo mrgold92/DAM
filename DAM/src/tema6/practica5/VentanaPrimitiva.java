@@ -68,7 +68,6 @@ public class VentanaPrimitiva extends JFrame {
 		generar.addActionListener(new ActionListener() {
 
 			Integer aleatorio = null;
-			ArrayList<Integer> repes = new ArrayList<Integer>();
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -80,18 +79,8 @@ public class VentanaPrimitiva extends JFrame {
 
 				}
 
-				for (int i = textos.length; i >= 0; i--) {
-					System.out.println(textos.length);
-					if (i == 0) {
-						i = 1;
-					}
-					if (textos[i].getText().equals(textos[i - 1].toString())) {
-						System.out.println("repetido: " + repes.get(i).toString());
-
-					}
-				}
-
 			}
+
 		});
 
 	}
