@@ -1,13 +1,16 @@
 package tema6.practica5;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class VentanaPrimitiva extends JFrame{
+public class VentanaPrimitiva extends JFrame {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	public VentanaPrimitiva() {
@@ -22,29 +25,31 @@ public class VentanaPrimitiva extends JFrame{
 
 		setVisible(true);
 	}
-	
+
 	public void componentes() {
+
 		JTextField tn1 = new JTextField();
-		JTextField tn2= new JTextField();
+		JTextField tn2 = new JTextField();
 		JTextField tn3 = new JTextField();
 		JTextField tn4 = new JTextField();
 		JTextField tn5 = new JTextField();
 		JTextField tn6 = new JTextField();
 		JLabel complementario = new JLabel("Complementario");
 		JButton generar = new JButton("Generar");
-		
+
 		tn1.setBounds(100, 100, 30, 20);
 		tn2.setBounds(130, 100, 30, 20);
 		tn3.setBounds(160, 100, 30, 20);
 		tn4.setBounds(190, 100, 30, 20);
 		tn5.setBounds(220, 100, 30, 20);
-		
-		
+
 		complementario.setBounds(300, 80, 100, 10);
 		tn6.setBounds(300, 100, 30, 20);
-		
-		generar.setBounds(340,100, 100, 20);
-		
+
+		generar.setBounds(340, 100, 100, 20);
+
+		JTextField[] arrayTextos = { tn1, tn2, tn3, tn4, tn5, tn6 };
+
 		add(tn1);
 		add(tn2);
 		add(tn3);
@@ -53,7 +58,41 @@ public class VentanaPrimitiva extends JFrame{
 		add(complementario);
 		add(tn6);
 		add(generar);
-		
-		
+
+		generarAleatorios(arrayTextos, generar);
+
+	}
+
+	public void generarAleatorios(JTextField[] textos, JButton generar) {
+
+		generar.addActionListener(new ActionListener() {
+
+			Integer aleatorio = null;
+			ArrayList<Integer> repes = new ArrayList<Integer>();
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < textos.length; i++) {
+
+					aleatorio = (int) (Math.random() * 50);
+
+					textos[i].setText(aleatorio.toString());
+
+				}
+
+				for (int i = textos.length; i >= 0; i--) {
+					System.out.println(textos.length);
+					if (i == 0) {
+						i = 1;
+					}
+					if (textos[i].getText().equals(textos[i - 1].toString())) {
+						System.out.println("repetido: " + repes.get(i).toString());
+
+					}
+				}
+
+			}
+		});
+
 	}
 }
