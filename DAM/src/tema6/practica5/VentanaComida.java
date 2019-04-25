@@ -121,8 +121,8 @@ public class VentanaComida extends JFrame {
 		btnComprobar.setForeground(Color.white);
 		add(btnComprobar);
 
-		JLabel resultado = new JLabel("******");
-		resultado.setBounds(317, 231, 80, 15);
+		JLabel resultado = new JLabel("---");
+		resultado.setBounds(250, 231, 230, 15);
 
 		JButton borrarButton = new JButton("Borrar");
 		borrarButton.setBounds(354, 177, 114, 25);
@@ -220,31 +220,56 @@ public class VentanaComida extends JFrame {
 				if (opciones.get(2).isSelected()) {
 					comprobaropciones = 2;
 				}
+				int c = 0;
+
+				for (int i = 0; i < checks.size(); i++) {
+					if (checks.get(i).isSelected()) {
+						c++;
+					}
+				}
 
 				switch (comprobaropciones) {
 				case 0:
-					if (checks.get(4).isSelected() && checks.get(5).isSelected() && checks.get(1).isSelected()
-							&& checks.get(9).isSelected()) {
-						resultado.setText("Correcto");
+
+					if (c <= 4) {
+						if (checks.get(4).isSelected() && checks.get(5).isSelected() && checks.get(1).isSelected()
+								&& checks.get(9).isSelected()) {
+							resultado.setText("Correcto");
+						} else {
+							resultado.setText("Solo puedes elegir 4 opciones");
+						}
+
 					} else {
-						resultado.setText("Incorrecto");
+						resultado.setText("Solo puedes elegir 4 opciones.");
 					}
 					break;
 				case 1:
-					if (checks.get(0).isSelected() && checks.get(4).isSelected() && checks.get(8).isSelected()
-							&& checks.get(9).isSelected() && checks.get(11).isSelected()) {
-						resultado.setText("Correcto");
+
+					if (c <= 5) {
+						if (checks.get(0).isSelected() && checks.get(4).isSelected() && checks.get(8).isSelected()
+								&& checks.get(9).isSelected() && checks.get(11).isSelected()) {
+							resultado.setText("Correcto");
+						} else {
+							resultado.setText("Incorrecto");
+						}
 					} else {
-						resultado.setText("Incorrecto");
+						resultado.setText("Solo puedes elegir 5 opciones.");
 					}
+
 					break;
 				case 2:
-					if (checks.get(2).isSelected() && checks.get(3).isSelected() && checks.get(6).isSelected()
-							&& checks.get(4).isSelected() && checks.get(8).isSelected()) {
-						resultado.setText("Correcto");
+
+					if (c <= 6) {
+						if (checks.get(2).isSelected() && checks.get(3).isSelected() && checks.get(6).isSelected()
+								&& checks.get(4).isSelected() && checks.get(8).isSelected()) {
+							resultado.setText("Correcto");
+						} else {
+							resultado.setText("Incorrecto");
+						}
 					} else {
-						resultado.setText("Incorrecto");
+						resultado.setText("Solo puedes elegir 6 opciones.");
 					}
+
 					break;
 
 				default:
