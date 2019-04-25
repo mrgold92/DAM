@@ -2,13 +2,18 @@ package tema6.practica5;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ * Clase que genera números aleatorios sin repetidos.
+ * 
+ * @author david salazar
+ *
+ */
 public class VentanaPrimitiva extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -19,6 +24,7 @@ public class VentanaPrimitiva extends JFrame {
 		setSize(600, 500);
 		setLayout(null);
 		setLocationRelativeTo(null);
+		setTitle("Ventana Primitiva");
 
 		// textos y botones
 		componentes();
@@ -43,7 +49,7 @@ public class VentanaPrimitiva extends JFrame {
 		tn4.setBounds(190, 100, 30, 20);
 		tn5.setBounds(220, 100, 30, 20);
 
-		complementario.setBounds(300, 80, 100, 10);
+		complementario.setBounds(300, 80, 120, 10);
 		tn6.setBounds(300, 100, 30, 20);
 
 		generar.setBounds(340, 100, 100, 20);
@@ -71,13 +77,13 @@ public class VentanaPrimitiva extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Integer aleatoriop = 0, aleatorio2 = 0;
 
-				//rellenamos el array con números aleatorios
+				// rellenamos el array con números aleatorios
 				for (int i = 0; i < textos.length; i++) {
 					aleatoriop = (int) (Math.random() * 100);
 					textos[i].setText(aleatoriop.toString());
 				}
 
-				//Quitamos coincidencias.
+				// Quitamos coincidencias.
 				for (int i = 0; i < textos.length; i++) {
 					for (int j = 0; j < textos.length; j++) {
 						if (textos[i].getText().equals(textos[j].getText()) && i != j) {

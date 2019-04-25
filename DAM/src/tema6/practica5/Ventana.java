@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Ventana extends JFrame {
 
@@ -16,67 +17,86 @@ public class Ventana extends JFrame {
 		setSize(600, 600);
 		setLayout(null);
 		setLocationRelativeTo(null);
-		
-		//botones & eventos
+		setTitle("Práctica 5 tema 6");
+
+		// botones & eventos
 		initComponents();
-		
+
 		setVisible(true);
 	}
-	
+
 	public void initComponents() {
-		
-		
+
+		JLabel seleccion = new JLabel("Elige opción: ");
+		seleccion.setBounds(190, 170, 230, 20);
+
 		JButton copiar = new JButton("Copiar texto");
-		copiar.setBounds(190, 200, 200, 20);
+		copiar.setBounds(190, 200, 230, 20);
 		copiar.setBackground(Color.darkGray);
 		copiar.setForeground(Color.white);
 		copiar.setFocusable(false);
-		
-		JButton generar = new JButton("Generar n�meros");
-		generar.setBounds(190, 230, 200, 20);
+
+		JButton generar = new JButton("Generar números");
+		generar.setBounds(190, 230, 230, 20);
 		generar.setBackground(Color.darkGray);
 		generar.setForeground(Color.white);
 		generar.setFocusable(false);
-		
+
 		JButton orden = new JButton("Cambiar orden letras");
-		orden.setBounds(190, 260, 200, 20);
+		orden.setBounds(190, 260, 230, 20);
 		orden.setBackground(Color.darkGray);
 		orden.setForeground(Color.white);
 		orden.setFocusable(false);
-		
+
 		JButton comida = new JButton("Comprobar ingredientes");
-		comida.setBounds(190, 290, 200, 20);
+		comida.setBounds(190, 290, 230, 20);
 		comida.setBackground(Color.darkGray);
 		comida.setForeground(Color.white);
 		comida.setFocusable(false);
-		
-		
-		
-		//eventos
-		
+
+		// eventos
+
 		copiar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new VentanaCopiar();
-				
+
 			}
 		});
-		
-		
+
 		generar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new VentanaPrimitiva();
-				
+
 			}
 		});
-		
-		
-		
+
+		orden.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new VentanaOrden();
+
+			}
+		});
+
+		comida.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new VentanaComida();
+
+			}
+		});
+
+		add(seleccion);
 		add(copiar);
 		add(generar);
 		add(orden);
