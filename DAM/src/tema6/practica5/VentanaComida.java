@@ -236,7 +236,7 @@ public class VentanaComida extends JFrame {
 								&& checks.get(9).isSelected()) {
 							resultado.setText("Correcto");
 						} else {
-							resultado.setText("Solo puedes elegir 4 opciones");
+							resultado.setText("Incorrecto");
 						}
 
 					} else {
