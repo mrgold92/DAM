@@ -248,7 +248,7 @@ public class VentanaComida extends JFrame {
 					break;
 
 				default:
-					resultado.setText("nválido.");
+					resultado.setText("Inválido.");
 					break;
 				}
 
