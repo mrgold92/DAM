@@ -26,7 +26,7 @@ Este repositorio ha sido creado con la intención de ilustrar con ejemplos ejerc
     - Carácter a carácter.
     - Línea a línea.
     - Byte a byte.
-  - Practica 4: Java Swing - Inicio eventos.
+  - Practica 5: Java Swing - Inicio eventos.
   
 - [Tema 7: Estructuras de almacenamiento (array y arrayList).](https://github.com/mrgold92/DAM/tree/master/DAM/src/tema7)
   - Práctica 1: Ejercicios de arrays I.
