@@ -27,7 +27,7 @@ public class Ventana extends JFrame {
 
 	public void initComponents() {
 
-		JLabel seleccion = new JLabel("Elige opciÃ³n: ");
+		JLabel seleccion = new JLabel("Elige opción: ");
 		seleccion.setBounds(190, 170, 230, 20);
 
 		JButton copiar = new JButton("Copiar texto");
@@ -36,7 +36,7 @@ public class Ventana extends JFrame {
 		copiar.setForeground(Color.white);
 		copiar.setFocusable(false);
 
-		JButton generar = new JButton("Generar nÃºmeros");
+		JButton generar = new JButton("Generar números");
 		generar.setBounds(190, 230, 230, 20);
 		generar.setBackground(Color.darkGray);
 		generar.setForeground(Color.white);

@@ -1,118 +1,123 @@
 package tema6.practica5;
 
-import java.awt.SystemColor;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
 
-/**
- * Clase que transforma un texto a su texto del revés.
- * 
- * @author david salazar
- *
- */
 public class VentanaOrden extends JFrame {
 
-	private static final long serialVersionUID = -2949479038856503031L;
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JButton btnDerecha;
+	private JButton btnIzquierda;
+	private JTextPane textIzquierdo;
+	private JTextPane textDerecho;
+	private JLabel lblDerecho;
+	private JLabel lblRevs;
 
 	public VentanaOrden() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(677, 326);
-		setLocationRelativeTo(null);
-		setLayout(null);
-		setTitle("Ventana Orden");
 
-		initComponentes();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setForeground(new Color(255, 255, 255));
+		contentPane.setBackground(new Color(70, 130, 180));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		setLocationRelativeTo(null);
+
+		// componentes
+		labels();
+		botones();
+		inputsTextos();
 
 		setVisible(true);
-	}
 
-	/**
-	 * Método que inicia todos mis componentes.
-	 */
-	public void initComponentes() {
-		JLabel etiquetaDerecha = new JLabel("Derecho");
-		etiquetaDerecha.setBounds(151, 85, 66, 15);
+		// eventos
 
-		JLabel etiquetaIzquierda = new JLabel("Revés");
-		etiquetaIzquierda.setBounds(396, 85, 66, 15);
-
-		JTextField textoIzquierdo = new JTextField();
-		textoIzquierdo.setBounds(151, 112, 124, 19);
-
-		JTextField textoDerecho = new JTextField();
-		textoDerecho.setBounds(396, 112, 124, 19);
-		add(textoDerecho);
-
-		JButton btnIzquierdo = new JButton("<");
-		btnIzquierdo.setForeground(SystemColor.text);
-		btnIzquierdo.setBackground(SystemColor.desktop);
-		btnIzquierdo.setBounds(308, 80, 44, 25);
-
-		// llamada a la acción del botón izquierdo
-		delderecho(btnIzquierdo, textoDerecho, textoIzquierdo);
-
-		JButton btnDerecho = new JButton(">");
-		btnDerecho.setForeground(SystemColor.text);
-		btnDerecho.setBackground(SystemColor.desktop);
-
-		btnDerecho.setBounds(308, 129, 44, 25);
-
-		// llamada a la acción del botón derecho
-		delreves(btnDerecho, textoDerecho, textoIzquierdo);
-
-		add(etiquetaDerecha);
-		add(etiquetaIzquierda);
-		add(textoIzquierdo);
-		add(textoDerecho);
-		add(btnIzquierdo);
-		add(btnDerecho);
+		cambiarOrden();
 
 	}
 
-	/**
-	 * 
-	 * @param JButton    btnIzquierdo
-	 * @param JTextField textoDerecho
-	 * @param JTextField textoIzquierdo
-	 */
+	public void botones() {
+		btnIzquierda = new JButton("<");
+		btnIzquierda.setBackground(Color.ORANGE);
+		btnIzquierda.setForeground(Color.BLACK);
+		btnIzquierda.setFocusable(false);
+		btnIzquierda.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnIzquierda.setBounds(165, 91, 89, 23);
+		contentPane.add(btnIzquierda);
 
-	public void delderecho(JButton btnIzquierdo, JTextField textoDerecho, JTextField textoIzquierdo) {
-		btnIzquierdo.addActionListener(new ActionListener() {
+		btnDerecha = new JButton(">");
+		btnDerecha.setBackground(Color.ORANGE);
+		btnDerecha.setFocusable(false);
+		btnDerecha.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnDerecha.setBounds(165, 147, 89, 23);
+		contentPane.add(btnDerecha);
+	}
+
+	public void labels() {
+		lblDerecho = new JLabel("Derecho");
+		lblDerecho.setForeground(new Color(255, 255, 255));
+		lblDerecho.setBounds(44, 91, 88, 14);
+		contentPane.add(lblDerecho);
+
+		lblRevs = new JLabel("Rev\u00E9s");
+		lblRevs.setForeground(new Color(255, 255, 255));
+		lblRevs.setBounds(288, 91, 88, 14);
+		contentPane.add(lblRevs);
+	}
+
+	public void inputsTextos() {
+		textIzquierdo = new JTextPane();
+		textIzquierdo.setBounds(44, 116, 88, 20);
+		contentPane.add(textIzquierdo);
+
+		textDerecho = new JTextPane();
+		textDerecho.setBounds(288, 116, 88, 20);
+		contentPane.add(textDerecho);
+	}
+
+	public void cambiarOrden() {
+		btnDerecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String texto = textoDerecho.getText();
+
+				String texto = textIzquierdo.getText();
+
 				String in = "";
 
 				for (int i = texto.length() - 1; i >= 0; i--) {
 					in = in + texto.charAt(i);
 
 				}
-				textoIzquierdo.setText(in);
+
+				textDerecho.setText(in);
 			}
 		});
-	}
 
-	/**
-	 * 
-	 * @param JButton    btnDerecho
-	 * @param JTextField textoDerecho
-	 * @param JTextField textoIzquierdo
-	 */
-	public void delreves(JButton btnDerecho, JTextField textoDerecho, JTextField textoIzquierdo) {
-		btnDerecho.addActionListener(new ActionListener() {
+		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String texto = textoIzquierdo.getText();
+				String texto = textDerecho.getText();
+
 				String in = "";
 
 				for (int i = texto.length() - 1; i >= 0; i--) {
 					in = in + texto.charAt(i);
 
 				}
-				textoDerecho.setText(in);
+
+				textIzquierdo.setText(in);
+
 			}
 		});
 	}
