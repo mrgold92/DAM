@@ -52,7 +52,7 @@ public class VentanaComida extends JFrame {
 		boxLentejas.setBounds(286, 8, 96, 17);
 		add(boxLentejas);
 
-		JRadioButton boxJudias = new JRadioButton("JudÃ­as");
+		JRadioButton boxJudias = new JRadioButton("Judías");
 		boxJudias.setBounds(386, 8, 80, 17);
 		add(boxJudias);
 
