@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
 /**
@@ -65,7 +66,7 @@ public class VentanaComida extends JFrame {
 
 		add(checkGarbanzos);
 
-		JCheckBox checkJudias = new JCheckBox("Judías");
+		JCheckBox checkJudias = new JCheckBox("Jud�as");
 		checkJudias.setBounds(354, 88, 89, 17);
 
 		add(checkJudias);
@@ -110,7 +111,7 @@ public class VentanaComida extends JFrame {
 
 		add(checkPescado);
 
-		JCheckBox checkPimenton = new JCheckBox("Pimentón");
+		JCheckBox checkPimenton = new JCheckBox("Piment�n");
 		checkPimenton.setBounds(452, 143, 100, 17);
 
 		add(checkPimenton);
@@ -133,12 +134,13 @@ public class VentanaComida extends JFrame {
 		add(borrarButton);
 
 		comprobar(resultado, btnComprobar, this);
+
 		add(resultado);
 
 	}
 
 	/**
-	 * Método que borrar todas las opciones que pudieran estar marcadas.
+	 * M�todo que borra todas las opciones que pudieran estar marcadas.
 	 * 
 	 * @param borrarbtn
 	 * @param frame
@@ -178,9 +180,38 @@ public class VentanaComida extends JFrame {
 		});
 	}
 
+	public void borrar(JFrame frame, JLabel resultado) {
+
+		Component[] componentes = frame.getContentPane().getComponents();
+		ArrayList<JCheckBox> checks = new ArrayList<JCheckBox>();
+		ArrayList<JRadioButton> opciones = new ArrayList<JRadioButton>();
+
+		for (int i = 0; i < componentes.length; i++) {
+			if (componentes[i] instanceof JCheckBox) {
+				checks.add((JCheckBox) componentes[i]);
+			}
+
+			if (componentes[i] instanceof JRadioButton) {
+				opciones.add((JRadioButton) componentes[i]);
+			}
+
+		}
+
+		for (JRadioButton opcion : opciones) {
+			opcion.setSelected(false);
+		}
+
+		for (JCheckBox check : checks) {
+			check.setSelected(false);
+		}
+
+		resultado.setText("");
+
+	}
+
 	/**
-	 * Método que comprueba qué opción está seleccionada y después comprueba si las
-	 * respuestas son correctas.
+	 * Método que comprueba qué opción está seleccionada y después comprueba si
+	 * las respuestas son correctas.
 	 * 
 	 * @param resultado
 	 * @param coomprobar
@@ -191,94 +222,113 @@ public class VentanaComida extends JFrame {
 		Component[] componentes = frame.getContentPane().getComponents();
 		ArrayList<JCheckBox> checks = new ArrayList<JCheckBox>();
 		ArrayList<JRadioButton> opciones = new ArrayList<JRadioButton>();
+
+		for (int i = 0; i < componentes.length; i++) {
+			if (componentes[i] instanceof JCheckBox) {
+				checks.add((JCheckBox) componentes[i]);
+			}
+
+			if (componentes[i] instanceof JRadioButton) {
+				opciones.add((JRadioButton) componentes[i]);
+			}
+
+		}
+
 		coomprobar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < componentes.length; i++) {
-					if (componentes[i] instanceof JCheckBox) {
-						checks.add((JCheckBox) componentes[i]);
-					}
+				int o = 0;
+				for (JRadioButton opcion : opciones) {
+					if (opcion.isSelected()) {
+						o++;
 
-					if (componentes[i] instanceof JRadioButton) {
-						opciones.add((JRadioButton) componentes[i]);
-					}
-
-				}
-
-				int comprobaropciones = 0;
-
-				if (opciones.get(0).isSelected()) {
-					comprobaropciones = 0;
-
-				}
-
-				if (opciones.get(1).isSelected()) {
-					comprobaropciones = 1;
-				}
-
-				if (opciones.get(2).isSelected()) {
-					comprobaropciones = 2;
-				}
-				int c = 0;
-
-				for (int i = 0; i < checks.size(); i++) {
-					if (checks.get(i).isSelected()) {
-						c++;
 					}
 				}
 
-				switch (comprobaropciones) {
-				case 0:
+				if (o >= 1) {
+					int comprobaropciones = 0;
 
-					if (c <= 4) {
-						if (checks.get(4).isSelected() && checks.get(5).isSelected() && checks.get(1).isSelected()
-								&& checks.get(9).isSelected()) {
-							resultado.setText("Correcto");
+					if (opciones.get(0).isSelected()) {
+						comprobaropciones = 0;
+
+					} else if (opciones.get(1).isSelected()) {
+						comprobaropciones = 1;
+
+					} else if (opciones.get(2).isSelected()) {
+						comprobaropciones = 2;
+
+					}
+
+					int c = 0;
+
+					for (int i = 0; i < checks.size(); i++) {
+						if (checks.get(i).isSelected()) {
+							c++;
+						}
+					}
+
+					switch (comprobaropciones) {
+					case 0:
+
+						if (c == 4) {
+							if (checks.get(4).isSelected() && checks.get(5).isSelected() && checks.get(1).isSelected()
+									&& checks.get(9).isSelected()) {
+								resultado.setText("Correcto");
+							} else {
+								resultado.setText("Incorrecto");
+							}
+
 						} else {
-							resultado.setText("Incorrecto");
+
+							resultado.setText("Solo puedes elegir 4 opciones.");
+
 						}
 
-					} else {
-						resultado.setText("Solo puedes elegir 4 opciones.");
-					}
-					break;
-				case 1:
+						break;
+					case 1:
 
-					if (c <= 5) {
-						if (checks.get(0).isSelected() && checks.get(4).isSelected() && checks.get(8).isSelected()
-								&& checks.get(9).isSelected() && checks.get(11).isSelected()) {
-							resultado.setText("Correcto");
+						if (c == 5) {
+							if (checks.get(0).isSelected() && checks.get(4).isSelected() && checks.get(8).isSelected()
+									&& checks.get(9).isSelected() && checks.get(11).isSelected()) {
+								resultado.setText("Correcto");
+							} else {
+								resultado.setText("Incorrecto");
+							}
 						} else {
-							resultado.setText("Incorrecto");
+							resultado.setText("Solo puedes elegir 5 opciones.");
 						}
-					} else {
-						resultado.setText("Solo puedes elegir 5 opciones.");
-					}
 
-					break;
-				case 2:
+						break;
+					case 2:
 
-					if (c <= 6) {
-						if (checks.get(2).isSelected() && checks.get(3).isSelected() && checks.get(6).isSelected()
-								&& checks.get(4).isSelected() && checks.get(8).isSelected()) {
-							resultado.setText("Correcto");
+						if (c == 6) {
+							if (checks.get(2).isSelected() && checks.get(3).isSelected() && checks.get(6).isSelected()
+									&& checks.get(4).isSelected() && checks.get(8).isSelected()) {
+								resultado.setText("Correcto");
+							} else {
+								resultado.setText("Incorrecto");
+							}
 						} else {
-							resultado.setText("Incorrecto");
+							resultado.setText("Solo puedes elegir 6 opciones.");
 						}
-					} else {
-						resultado.setText("Solo puedes elegir 6 opciones.");
+
+						break;
+
+					default:
+						resultado.setText("Inv�lido.");
+						break;
 					}
 
-					break;
+				} else {
 
-				default:
-					resultado.setText("Inválido.");
-					break;
+					resultado.setText("Debes elegir un plato de comida.");
+
 				}
-
 			}
+
 		});
 
 	}
+
 }
