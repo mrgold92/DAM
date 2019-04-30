@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
 /**
@@ -180,38 +179,9 @@ public class VentanaComida extends JFrame {
 		});
 	}
 
-	public void borrar(JFrame frame, JLabel resultado) {
-
-		Component[] componentes = frame.getContentPane().getComponents();
-		ArrayList<JCheckBox> checks = new ArrayList<JCheckBox>();
-		ArrayList<JRadioButton> opciones = new ArrayList<JRadioButton>();
-
-		for (int i = 0; i < componentes.length; i++) {
-			if (componentes[i] instanceof JCheckBox) {
-				checks.add((JCheckBox) componentes[i]);
-			}
-
-			if (componentes[i] instanceof JRadioButton) {
-				opciones.add((JRadioButton) componentes[i]);
-			}
-
-		}
-
-		for (JRadioButton opcion : opciones) {
-			opcion.setSelected(false);
-		}
-
-		for (JCheckBox check : checks) {
-			check.setSelected(false);
-		}
-
-		resultado.setText("");
-
-	}
-
 	/**
-	 * MÃ©todo que comprueba quÃ© opciÃ³n estÃ¡ seleccionada y despuÃ©s comprueba si
-	 * las respuestas son correctas.
+	 * Método que comprueba qué opción está¡ seleccionada y después comprueba si las
+	 * respuestas son correctas.
 	 * 
 	 * @param resultado
 	 * @param coomprobar
