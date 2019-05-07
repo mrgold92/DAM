@@ -19,6 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * 
+ * @author david salazar
+ *
+ */
 public class Ventana extends JFrame {
 
 	private static final long serialVersionUID = -5992161209784205527L;
@@ -27,7 +32,8 @@ public class Ventana extends JFrame {
 	private JTextField textNombre;
 	private JTextField textApellidos;
 	private JTextField textTelefono;
-	private final File RUTA = new File("resources/Alumnos.txt");
+	private final File RUTA = new File("Alumnos.txt");
+	private final File directorio = new File("resources");
 
 	public Ventana() {
 		setTitle("Pr\u00E1ctica subir nota");
@@ -43,49 +49,49 @@ public class Ventana extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel labelNombre = new JLabel("NOMBRE");
-		labelNombre.setBounds(245, 57, 65, 14);
+		labelNombre.setBounds(260, 56, 65, 14);
 		contentPane.add(labelNombre);
 
 		textNombre = new JTextField();
-		textNombre.setBounds(179, 82, 190, 20);
+		textNombre.setBounds(194, 81, 190, 20);
 		contentPane.add(textNombre);
 		textNombre.setColumns(10);
 
 		JLabel labelApellido = new JLabel("APELLIDOS");
-		labelApellido.setBounds(245, 124, 65, 14);
+		labelApellido.setBounds(260, 123, 96, 14);
 		contentPane.add(labelApellido);
 
 		textApellidos = new JTextField();
-		textApellidos.setBounds(179, 149, 190, 20);
+		textApellidos.setBounds(194, 148, 190, 20);
 		contentPane.add(textApellidos);
 		textApellidos.setColumns(10);
 
 		JLabel labelTelefono = new JLabel("TEL\u00C9FONO");
-		labelTelefono.setBounds(245, 202, 65, 14);
+		labelTelefono.setBounds(248, 200, 108, 14);
 		contentPane.add(labelTelefono);
 
 		textTelefono = new JTextField();
-		textTelefono.setBounds(179, 227, 190, 20);
+		textTelefono.setBounds(194, 226, 190, 20);
 		contentPane.add(textTelefono);
 		textTelefono.setColumns(10);
 
 		JLabel mensajes = new JLabel("");
 		mensajes.setHorizontalAlignment(SwingConstants.CENTER);
-		mensajes.setBounds(47, 344, 462, 24);
+		mensajes.setBounds(47, 333, 462, 43);
 
 		contentPane.add(mensajes);
 
 		// GUARDAR
 		JButton btnNewButton = new JButton("Guardar");
 		btnNewButton.setBackground(new Color(255, 165, 0));
-		btnNewButton.setBounds(179, 301, 89, 23);
+		btnNewButton.setBounds(175, 300, 108, 23);
 		acGuardar(btnNewButton, mensajes);
 		contentPane.add(btnNewButton);
 
 		// Mostrar
 		JButton btnNewButton_1 = new JButton("Mostrar");
 		btnNewButton_1.setBackground(new Color(255, 165, 0));
-		btnNewButton_1.setBounds(280, 301, 89, 23);
+		btnNewButton_1.setBounds(295, 300, 108, 23);
 		acMostrar(btnNewButton_1, mensajes);
 		contentPane.add(btnNewButton_1);
 
@@ -121,7 +127,7 @@ public class Ventana extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (textTelefono.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Debes introducir un teléfono");
+					JOptionPane.showMessageDialog(null, "Debes introducir un tel\u00e9fono");
 				} else {
 					String telefono = textTelefono.getText();
 					buscarA(telefono, mensajes);
@@ -136,8 +142,15 @@ public class Ventana extends JFrame {
 		BufferedWriter escritor;
 		mensajes.setText("");
 		String[] info = { nombre, apellidos, telefono };
+
+		// creamos la carpeta "resources" si no existiera (dentro del proyecto, al nivel
+		// de src)
+		if (!directorio.exists()) {
+			directorio.mkdir();
+		}
+
 		try {
-			escritor = new BufferedWriter(new FileWriter(RUTA, true));
+			escritor = new BufferedWriter(new FileWriter(directorio + "/" + RUTA, true));
 
 			for (String i : info) {
 				escritor.write(i + " ");
@@ -148,7 +161,7 @@ public class Ventana extends JFrame {
 			escritor.flush();
 			escritor.close();
 
-			JOptionPane.showMessageDialog(null, "Información guardada correctamente");
+			JOptionPane.showMessageDialog(null, "Informaci\u00f3n guardada correctamente.");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -163,7 +176,7 @@ public class Ventana extends JFrame {
 		mensaje.setText("");
 
 		try {
-			lector = new BufferedReader(new FileReader(RUTA));
+			lector = new BufferedReader(new FileReader(directorio + "/" + RUTA));
 
 			String linea, info = "";
 
@@ -172,7 +185,7 @@ public class Ventana extends JFrame {
 					info = linea;
 
 				} else {
-					mensaje.setText("No hemos encontrado ningún registro.");
+					mensaje.setText("No hemos encontrado ning\u00fan registro.");
 				}
 
 			}
