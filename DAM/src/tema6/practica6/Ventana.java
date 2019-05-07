@@ -33,7 +33,7 @@ public class Ventana extends JFrame {
 	private JTextField textApellidos;
 	private JTextField textTelefono;
 	private final File RUTA = new File("Alumnos.txt");
-	private final File directorio = new File("resources");
+	private final File DIRECTORIO = new File("resources");
 
 	public Ventana() {
 		setTitle("Pr\u00E1ctica subir nota");
@@ -145,12 +145,12 @@ public class Ventana extends JFrame {
 
 		// creamos la carpeta "resources" si no existiera (dentro del proyecto, al nivel
 		// de src)
-		if (!directorio.exists()) {
-			directorio.mkdir();
+		if (!DIRECTORIO.exists()) {
+			DIRECTORIO.mkdir();
 		}
 
 		try {
-			escritor = new BufferedWriter(new FileWriter(directorio + "/" + RUTA, true));
+			escritor = new BufferedWriter(new FileWriter(DIRECTORIO + "/" + RUTA, true));
 
 			for (String i : info) {
 				escritor.write(i + " ");
@@ -176,7 +176,7 @@ public class Ventana extends JFrame {
 		mensaje.setText("");
 
 		try {
-			lector = new BufferedReader(new FileReader(directorio + "/" + RUTA));
+			lector = new BufferedReader(new FileReader(DIRECTORIO + "/" + RUTA));
 
 			String linea, info = "";
 
