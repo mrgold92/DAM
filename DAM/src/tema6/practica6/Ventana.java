@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -81,24 +82,25 @@ public class Ventana extends JFrame {
 
 		contentPane.add(mensajes);
 
-		// GUARDAR
 		JButton btnNewButton = new JButton("Guardar");
 		btnNewButton.setBackground(new Color(255, 165, 0));
 		btnNewButton.setBounds(175, 300, 108, 23);
-		acGuardar(btnNewButton, mensajes);
 		contentPane.add(btnNewButton);
 
-		// Mostrar
 		JButton btnNewButton_1 = new JButton("Mostrar");
 		btnNewButton_1.setBackground(new Color(255, 165, 0));
 		btnNewButton_1.setBounds(295, 300, 108, 23);
-		acMostrar(btnNewButton_1, mensajes);
 		contentPane.add(btnNewButton_1);
+
+		// Llamada a acciones
+		acciones(btnNewButton, btnNewButton_1, mensajes);
 
 		setVisible(true);
 	}
 
-	public void acGuardar(JButton btnNewButton, JLabel mensajes) {
+	public void acciones(JButton btnNewButton, JButton btnNewButton_1, JLabel mensajes) {
+
+		// Accion botón guardar
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -121,9 +123,8 @@ public class Ventana extends JFrame {
 				}
 			}
 		});
-	}
 
-	public void acMostrar(JButton btnNewButton_1, JLabel mensajes) {
+		// Acción botón mostrar
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (textTelefono.getText().equals("")) {
@@ -161,6 +162,8 @@ public class Ventana extends JFrame {
 			escritor.flush();
 			escritor.close();
 
+			mensajes.setText("");
+			mensajes.setOpaque(false);
 			JOptionPane.showMessageDialog(null, "Informaci\u00f3n guardada correctamente.");
 
 		} catch (IOException e) {
@@ -174,6 +177,11 @@ public class Ventana extends JFrame {
 		BufferedReader lector;
 		mensaje.setOpaque(false);
 		mensaje.setText("");
+		String[] datos;
+
+		String nombre;
+		String apellidos = null;
+		String telef = null;
 
 		try {
 			lector = new BufferedReader(new FileReader(DIRECTORIO + "/" + RUTA));

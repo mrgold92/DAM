@@ -6,3 +6,6 @@ Diego Martin 915042329
 David Salazar Rodero 915042328 
 David Sanchez 619590796 
 david salazar rodero 51131600R 
+Diego Perez 123456789 
+pedro lopez 1234567890 
+maria gomez 1234567 
