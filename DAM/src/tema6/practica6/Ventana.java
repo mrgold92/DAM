@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -177,11 +176,7 @@ public class Ventana extends JFrame {
 		BufferedReader lector;
 		mensaje.setOpaque(false);
 		mensaje.setText("");
-		String[] datos;
-
-		String nombre;
-		String apellidos = null;
-		String telef = null;
+		
 
 		try {
 			lector = new BufferedReader(new FileReader(DIRECTORIO + "/" + RUTA));
