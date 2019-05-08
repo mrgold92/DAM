@@ -176,24 +176,25 @@ public class Ventana extends JFrame {
 		BufferedReader lector;
 		mensaje.setOpaque(false);
 		mensaje.setText("");
-		
 
 		try {
 			lector = new BufferedReader(new FileReader(DIRECTORIO + "/" + RUTA));
 
-			String linea, info = "";
+			String linea = "", info = "";
 
 			while ((linea = lector.readLine()) != null) {
 				if (linea.contains(telefono)) {
 					info = linea;
 
-				} else {
-					mensaje.setText("No hemos encontrado ning\u00fan registro.");
 				}
 
 			}
 
-			mensaje.setText(info);
+			if (info.equals("")) {
+				mensaje.setText("No hemos encontrado ninguna información con ese teléfono.");
+			} else {
+				mensaje.setText(info);
+			}
 
 		} catch (IOException e) {
 
