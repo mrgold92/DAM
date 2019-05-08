@@ -32,8 +32,8 @@ public class VentanaRomano extends JFrame {
 	private JButton btnParaIzquierda;
 	private JLabel mensaje;
 
-	File directorio = new File("resources");
-	File ruta = new File("resources/romanos.txt");
+	private final File DIRECTORIO = new File("resources");
+	private final File RUTA = new File("resources/romanos.txt");
 
 	public VentanaRomano() {
 		crearFichero();
@@ -86,14 +86,14 @@ public class VentanaRomano extends JFrame {
 
 		BufferedWriter escritor = null;
 
-		if (!directorio.exists()) {
-			directorio.mkdir();
+		if (!DIRECTORIO.exists()) {
+			DIRECTORIO.mkdir();
 		}
 
-		if (!ruta.exists()) {
+		if (!RUTA.exists()) {
 			try {
-				ruta.createNewFile();
-				escritor = new BufferedWriter(new FileWriter(ruta, true));
+				RUTA.createNewFile();
+				escritor = new BufferedWriter(new FileWriter(RUTA, true));
 				for (int i = 1; i <= 3999; i++) {
 					escritor.write(i + " " + convertirRomano(i) + "\n");
 				}
@@ -181,7 +181,7 @@ public class VentanaRomano extends JFrame {
 				BufferedReader lector;
 
 				try {
-					lector = new BufferedReader(new FileReader(ruta));
+					lector = new BufferedReader(new FileReader(RUTA));
 
 					String linea, info = "";
 
@@ -223,7 +223,7 @@ public class VentanaRomano extends JFrame {
 				BufferedReader lector;
 
 				try {
-					lector = new BufferedReader(new FileReader(ruta));
+					lector = new BufferedReader(new FileReader(RUTA));
 
 					String linea, info = "";
 
