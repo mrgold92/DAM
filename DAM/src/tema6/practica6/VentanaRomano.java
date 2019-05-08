@@ -33,7 +33,7 @@ public class VentanaRomano extends JFrame {
 	private JLabel mensaje;
 
 	private final File DIRECTORIO = new File("resources");
-	private final File RUTA = new File("resources/romanos.txt");
+	private final File RUTA = new File(DIRECTORIO + "/romanos.txt");
 
 	public VentanaRomano() {
 		crearFichero();
