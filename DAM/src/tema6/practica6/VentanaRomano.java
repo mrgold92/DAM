@@ -199,7 +199,7 @@ public class VentanaRomano extends JFrame {
 
 					}
 
-					if (info == "") {
+					if (info.equals("")) {
 						mensaje.setText("No se han encontrado resultados.");
 					} else {
 						mensaje.setText("");
@@ -241,7 +241,7 @@ public class VentanaRomano extends JFrame {
 
 					}
 
-					if (info == "") {
+					if (info.equals("")) {
 						mensaje.setText("No se han encontrado resultados.");
 					} else {
 						mensaje.setText("");
