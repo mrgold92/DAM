@@ -219,7 +219,7 @@ public class VentanaRomano extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String textoIz = textoIzquierda.getText().toUpperCase();
-				;
+				
 				BufferedReader lector;
 
 				try {
