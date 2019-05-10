@@ -1,6 +1,7 @@
 package tema8.practica1;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -40,6 +41,7 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField textDate;
 	private JTextPane textObserva;
 	private JLabel mensaje;
+	private JButton btnLimpiar;
 
 	public VentanaPrincipal() {
 
@@ -60,12 +62,13 @@ public class VentanaPrincipal extends JFrame {
 	 * Método que coloca todos los componentes en la ventana
 	 */
 	public void initComponentes() {
+		
 		JLabel lblNuevoProducto = new JLabel("PRODUCTOS");
 		lblNuevoProducto.setOpaque(true);
 		lblNuevoProducto.setForeground(Color.white);
-		lblNuevoProducto.setBackground(new Color(112, 128, 144));
+		lblNuevoProducto.setBackground(new Color(51, 102, 204));
 		lblNuevoProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNuevoProducto.setBounds(219, 38, 172, 35);
+		lblNuevoProducto.setBounds(102, 24, 456, 49);
 		contentPane.add(lblNuevoProducto);
 
 		JLabel lblIdproducto = new JLabel("ID_PRODUCTO");
@@ -134,10 +137,14 @@ public class VentanaPrincipal extends JFrame {
 		btnModificar.setForeground(Color.white);
 
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 637, 21);
+		menuBar.setForeground(new Color(255, 255, 255));
+		menuBar.setBackground(new Color(51, 102, 153));
+		menuBar.setBounds(0, 0, 637, 25);
 		contentPane.add(menuBar);
 
 		JMenu btnFile = new JMenu("File");
+		btnFile.setForeground(new Color(255, 255, 255));
+		btnFile.setHorizontalAlignment(SwingConstants.CENTER);
 		menuBar.add(btnFile);
 
 		JMenuItem btnFileSalir = new JMenuItem("Salir");
@@ -162,9 +169,36 @@ public class VentanaPrincipal extends JFrame {
 		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
 		mensaje.setBounds(99, 412, 441, 25);
 		contentPane.add(mensaje);
+
+		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.setForeground(new Color(255, 255, 255));
+		btnLimpiar.setBackground(new Color(51, 102, 204));
+		btnLimpiar.setBounds(473, 69, 85, 36);
+		btnLimpiar.setFocusable(false);
+		contentPane.add(btnLimpiar);
+		limpiar();
+
+		// cursores
+		btnEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnInsertar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnModificar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnConsultar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnLimpiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 		mostrarFechaActual();
 
 		setVisible(true);
+	}
+
+	/**
+	 * Acción del botón limpiar
+	 */
+	public void limpiar() {
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarCampos();
+			}
+		});
 	}
 
 	/**
@@ -385,7 +419,14 @@ public class VentanaPrincipal extends JFrame {
 
 						}
 
-						c.cerrarConexion(r, prepare);
+						if (r != null) {
+							c.cerrarConexion(r);
+
+						}
+
+						if (prepare != null) {
+							c.cerrarConexion(prepare);
+						}
 
 					} catch (SQLException e1) {
 						e1.printStackTrace();
