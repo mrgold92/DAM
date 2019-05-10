@@ -17,11 +17,16 @@ public class Conexion {
 	public Conexion() {
 
 		try {
+			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda", "root", "");
 			sta = conn.createStatement();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Ha ocurrido algún problema de conexión.");
 		}
 	}
 
@@ -59,8 +64,6 @@ public class Conexion {
 		}
 
 	}
-	
-	
 
 	/**
 	 * Cierra conexión de un Resulset
@@ -114,7 +117,7 @@ public class Conexion {
 		}
 
 	}
-	
+
 	public void cerrarConexion(PreparedStatement prepare1, PreparedStatement prepare2) {
 		try {
 			prepare1.close();
