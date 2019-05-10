@@ -34,11 +34,12 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField textPrecio;
 	private JTextField textDate;
 	private JTextPane textObserva;
+	private JLabel mensaje;
 
 	public VentanaPrincipal() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 637, 462);
+		setBounds(100, 100, 637, 503);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(250, 235, 215));
@@ -151,9 +152,54 @@ public class VentanaPrincipal extends JFrame {
 		textDate.setColumns(10);
 
 		mostrarIdDefecto(textID);
+
+		mensaje = new JLabel("");
+		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
+		mensaje.setBounds(99, 412, 441, 25);
+		contentPane.add(mensaje);
 		mostrarFechaActual();
 
 		setVisible(true);
+	}
+
+	public void lanzarMensaje(String mensaje, boolean error) {
+
+		if (error) {
+			this.mensaje.setOpaque(true);
+			this.mensaje.setBackground(new Color(216, 68, 60));
+			this.mensaje.setForeground(Color.white);
+			this.mensaje.setText(mensaje);
+		} else {
+			this.mensaje.setOpaque(true);
+			this.mensaje.setBackground(new Color(67, 186, 63));
+			this.mensaje.setForeground(Color.white);
+			this.mensaje.setText(mensaje);
+		}
+	}
+
+	public void cleanMensaje() {
+		mensaje.setOpaque(false);
+		mensaje.setText("");
+	}
+
+	/**
+	 * Método que deja limpia todos los campos
+	 */
+	public void borrarCampos() {
+		textID.setText("");
+		textNombre.setText("");
+		textPrecio.setText("");
+		textDate.setText("");
+		textObserva.setText("");
+	}
+
+	/**
+	 * Muesta el id y la hora actual.
+	 */
+
+	public void mostrarPorDefecto() {
+		mostrarIdDefecto(textID);
+		mostrarFechaActual();
 	}
 
 	/**
@@ -183,8 +229,13 @@ public class VentanaPrincipal extends JFrame {
 			ResultSet resultado = sta
 					.executeQuery("SELECT id_producto FROM productos ORDER BY id_producto DESC LIMIT 1 ");
 			resultado.next();
-			String c1 = Integer.toString(resultado.getInt("id_producto"));
-			textid_producto.setText(c1);
+			if (resultado.getRow() > 0) {
+				String c1 = Integer.toString(resultado.getInt("id_producto"));
+				textid_producto.setText(c1);
+			} else {
+				textid_producto.setText("1");
+			}
+
 			c.cerrarConexion(resultado);
 
 		} catch (SQLException e) {
@@ -214,30 +265,32 @@ public class VentanaPrincipal extends JFrame {
 	/**
 	 * Método que inserta nuevos registros
 	 * 
-	 * @param btnModificar
+	 * @param btnInsertar
 	 */
-	public void insertar(JButton btnModificar) {
-		btnModificar.addActionListener(new ActionListener() {
+	public void insertar(JButton btnInsertar) {
+		btnInsertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				cleanMensaje();
 				Conexion c = new Conexion();
 				Statement s = c.getSatatement();
-
-				Integer id = Integer.parseInt(textID.getText());
+				ResultSet result = null;
 
 				try {
-					ResultSet result = s.executeQuery("SELECT id_producto FROM productos WHERE id_producto=" + id);
 
-					result.next();
+					if (!textID.getText().isEmpty() && !textNombre.getText().isEmpty()
+							&& !textPrecio.getText().isEmpty() && !textDate.getText().isEmpty()
+							&& !textObserva.getText().isEmpty()) {
 
-					if (result.getRow() > 0) {
-						JOptionPane.showMessageDialog(VentanaPrincipal.this, "El producto ya existe.");
+						Integer id = Integer.parseInt(textID.getText());
+						result = s.executeQuery("SELECT id_producto FROM productos WHERE id_producto=" + id);
 
-					} else {
+						result.next();
 
-						if (!textID.getText().isEmpty() && !textNombre.getText().isEmpty()
-								&& !textPrecio.getText().isEmpty() && !textDate.getText().isEmpty()
-								&& !textObserva.getText().isEmpty()) {
+						if (result.getRow() > 0) {
+							lanzarMensaje("El producto ya existe.", true);
+
+						} else {
 
 							String nombre = textNombre.getText();
 							Float precio = Float.parseFloat(textPrecio.getText());
@@ -251,14 +304,19 @@ public class VentanaPrincipal extends JFrame {
 
 							c.cerrarConexion();
 
-						} else {
-							JOptionPane.showMessageDialog(VentanaPrincipal.this, "Debes rellenar todos los campos.");
+							lanzarMensaje("Insertado correctamente.", false);
+
+							borrarCampos();
+							mostrarPorDefecto();
 
 						}
+						c.cerrarConexion(result);
+					} else {
+
+						lanzarMensaje("Debes rellenar todos los campos.", true);
 
 					}
 
-					c.cerrarConexion(result);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -271,9 +329,10 @@ public class VentanaPrincipal extends JFrame {
 	 * 
 	 * @param btnConsultar
 	 */
-	public void modificar(JButton btnConsultar) {
-		btnConsultar.addActionListener(new ActionListener() {
+	public void modificar(JButton btnModificar) {
+		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cleanMensaje();
 				Conexion c = new Conexion();
 				Statement sta = c.getSatatement();
 				PreparedStatement prepare = null;
@@ -292,10 +351,10 @@ public class VentanaPrincipal extends JFrame {
 					try {
 
 						r = sta.executeQuery(query);
+
 						r.next();
 						if (r.getRow() < 1) {
-							JOptionPane.showMessageDialog(VentanaPrincipal.this,
-									"No existe el registro para poder cambiarlo.");
+							lanzarMensaje("No existe el registro para poder cambiarlo.", true);
 
 						} else {
 							prepare = c.getPreparedStatement(update);
@@ -304,6 +363,11 @@ public class VentanaPrincipal extends JFrame {
 							prepare.setDate(3, java.sql.Date.valueOf(textDate.getText()));
 							prepare.setString(4, textObserva.getText());
 							prepare.executeUpdate();
+
+							lanzarMensaje("Registro actualizado correctamente.", false);
+
+							borrarCampos();
+							mostrarPorDefecto();
 
 						}
 
@@ -314,7 +378,7 @@ public class VentanaPrincipal extends JFrame {
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Debes rellenar todos los campos.");
+					lanzarMensaje("Debes rellenar todos los campos.", true);
 
 				}
 			}
@@ -330,7 +394,7 @@ public class VentanaPrincipal extends JFrame {
 	public void consultar(JButton btnConsultar) {
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				cleanMensaje();
 				Conexion c = new Conexion();
 
 				if (!textID.getText().isEmpty()) {
@@ -349,8 +413,7 @@ public class VentanaPrincipal extends JFrame {
 
 						r.next();
 						if (r.getRow() < 1) {
-							JOptionPane.showMessageDialog(VentanaPrincipal.this,
-									"No existe el registro para consultar.");
+							lanzarMensaje("No existe el registro para consultar.", true);
 
 						} else {
 
@@ -376,7 +439,9 @@ public class VentanaPrincipal extends JFrame {
 								prepare2.close();
 
 							}
+
 						}
+
 						c.cerrarConexion(r, prepare);
 
 					} catch (NumberFormatException | SQLException e1) {
@@ -385,7 +450,7 @@ public class VentanaPrincipal extends JFrame {
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(VentanaPrincipal.this, "Debes rellenar el campo Id_ producto.");
+					lanzarMensaje("Debes rellenar el campo Id_ producto.", true);
 
 				}
 			}
@@ -404,6 +469,7 @@ public class VentanaPrincipal extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				cleanMensaje();
 				Conexion c = new Conexion();
 
 				if (!textID.getText().isEmpty()) {
@@ -430,8 +496,11 @@ public class VentanaPrincipal extends JFrame {
 							if (opcion == JOptionPane.YES_OPTION) {
 								prepareDelete.setInt(1, id);
 								prepareDelete.executeUpdate();
-								JOptionPane.showMessageDialog(VentanaPrincipal.this, "Borrado correctamente.");
+								lanzarMensaje("Borrado correctamente", false);
+
 							}
+							borrarCampos();
+							mostrarPorDefecto();
 
 						}
 
@@ -452,5 +521,6 @@ public class VentanaPrincipal extends JFrame {
 				}
 			}
 		});
+
 	}
 }
