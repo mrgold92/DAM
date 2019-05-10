@@ -35,4 +35,4 @@ Este repositorio ha sido creado con la intención de ilustrar con ejemplos ejerc
   - Práctica 2: EJercicios de arrays II.
   - Práctica 3: ArrayList.
 - [Tema 8: Acceso a Bases de Datos](https://github.com/mrgold92/DAM/tree/master/DAM/src/tema8)
-  - Práctoca 1: CRUD (mysql).
+  - Práctica 1: CRUD (mysql).
