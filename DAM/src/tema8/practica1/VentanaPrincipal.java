@@ -511,10 +511,9 @@ public class VentanaPrincipal extends JFrame {
 								prepareDelete.setInt(1, id);
 								prepareDelete.executeUpdate();
 								lanzarMensaje("Borrado correctamente", false);
-
+								borrarCampos();
+								mostrarPorDefecto();
 							}
-							borrarCampos();
-							mostrarPorDefecto();
 
 						}
 
