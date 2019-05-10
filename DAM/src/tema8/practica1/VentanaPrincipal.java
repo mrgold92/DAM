@@ -197,7 +197,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Método que deja limpia todos los campos
+	 * Método que deja limpios todos los campos
 	 */
 	public void borrarCampos() {
 		textID.setText("");
