@@ -25,6 +25,11 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * 
+ * @author David Salazar
+ *
+ */
 public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 4599291663601838614L;
@@ -101,14 +106,14 @@ public class VentanaPrincipal extends JFrame {
 		JButton btnConsultar = new JButton("CONSULTAR");
 		consultar(btnConsultar);
 		btnConsultar.setBackground(new Color(0, 204, 102));
-		btnConsultar.setBounds(99, 377, 118, 23);
+		btnConsultar.setBounds(99, 377, 132, 23);
 		contentPane.add(btnConsultar);
 
 		JButton btnInsertar = new JButton("INSERTAR");
 		insertar(btnInsertar);
 
 		btnInsertar.setBackground(new Color(154, 205, 50));
-		btnInsertar.setBounds(204, 377, 112, 23);
+		btnInsertar.setBounds(222, 377, 103, 23);
 		contentPane.add(btnInsertar);
 
 		JButton btnEliminar = new JButton("ELIMINAR");
@@ -162,6 +167,12 @@ public class VentanaPrincipal extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Método que inserta mensajes de error o información en la ventana
+	 * 
+	 * @param mensaje a mostrar
+	 * @param error,  si se trata de un mensaje de error o no.
+	 */
 	public void lanzarMensaje(String mensaje, boolean error) {
 
 		if (error) {
@@ -177,6 +188,9 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
+	/**
+	 * Método que borra la visualización de mensajes en la ventana.
+	 */
 	public void cleanMensaje() {
 		mensaje.setOpaque(false);
 		mensaje.setText("");

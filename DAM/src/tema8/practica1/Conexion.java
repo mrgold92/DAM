@@ -8,6 +8,11 @@ import java.sql.Statement;
 
 import java.sql.PreparedStatement;
 
+/**
+ * 
+ * @author David Salazar
+ *
+ */
 public class Conexion {
 
 	private Statement sta;
@@ -51,6 +56,8 @@ public class Conexion {
 		return prepared;
 
 	}
+
+	// sobrecarga de métodos para cerrar conexiones.
 
 	/**
 	 * Cierra conexión de un Statament
@@ -118,6 +125,12 @@ public class Conexion {
 
 	}
 
+	/**
+	 * Cierra la conexión de dos PrepareStatament.
+	 * 
+	 * @param prepare1
+	 * @param prepare2
+	 */
 	public void cerrarConexion(PreparedStatement prepare1, PreparedStatement prepare2) {
 		try {
 			prepare1.close();
