@@ -157,7 +157,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Poner fecha del día actual. La idea es que te mueste por defecto la fecha
+	 * Poner fecha del día actual. La idea es que te muestre por defecto la fecha
 	 * actual para que no tengas que ponerla a mano.
 	 */
 
@@ -169,9 +169,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Método que muestra el ID siguiente al último almacenado en la BBDD (es decir,
-	 * el que se creará), la idea es que al crear un producto,sepas qué número de
-	 * producto vas a crear.
+	 * Método que muestra el id del último producto en la BDDD.
 	 * 
 	 * @param textid_producto
 	 */
