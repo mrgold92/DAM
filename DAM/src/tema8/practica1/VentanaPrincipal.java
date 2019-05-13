@@ -25,6 +25,14 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * 
@@ -42,6 +50,8 @@ public class VentanaPrincipal extends JFrame {
 	private JTextPane textObserva;
 	private JLabel mensaje;
 	private JButton btnLimpiar;
+	private JComboBox<String> textCombo;
+	private JMenuItem btnExportar;
 
 	public VentanaPrincipal() {
 
@@ -59,10 +69,10 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * MÃ©todo que coloca todos los componentes en la ventana
+	 * Método que coloca todos los componentes en la ventana
 	 */
 	public void initComponentes() {
-		
+
 		JLabel lblNuevoProducto = new JLabel("PRODUCTOS");
 		lblNuevoProducto.setOpaque(true);
 		lblNuevoProducto.setForeground(Color.white);
@@ -154,6 +164,11 @@ public class VentanaPrincipal extends JFrame {
 
 		salir(btnFileSalir);
 
+		btnExportar = new JMenu("Exportar");
+
+		btnExportar.setForeground(Color.WHITE);
+		menuBar.add(btnExportar);
+
 		JLabel lblFecha = new JLabel("FECHA");
 		lblFecha.setBounds(102, 218, 58, 15);
 		contentPane.add(lblFecha);
@@ -185,13 +200,21 @@ public class VentanaPrincipal extends JFrame {
 		btnConsultar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnLimpiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+		textCombo = new JComboBox<String>();
+		textCombo.addItem("Nuevo");
+		textCombo.addItem("Segunda mano");
+		textCombo.setBounds(280, 242, 197, 20);
+		contentPane.add(textCombo);
+
 		mostrarFechaActual();
+
+		exportar();
 
 		setVisible(true);
 	}
 
 	/**
-	 * AcciÃ³n del botÃ³n limpiar
+	 * Acción del botón limpiar
 	 */
 	public void limpiar() {
 		btnLimpiar.addActionListener(new ActionListener() {
@@ -202,10 +225,10 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * MÃ©todo que inserta mensajes de error o informaciÃ³n en la ventana
+	 * Método que inserta mensajes de error o información en la ventana
 	 * 
 	 * @param mensaje a mostrar
-	 * @param error,  si se trata de un mensaje de error o no.
+	 * @param         error, si se trata de un mensaje de error o no.
 	 */
 	public void lanzarMensaje(String mensaje, boolean error) {
 
@@ -223,7 +246,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * MÃ©todo que borra la visualizaciÃ³n de mensajes en la ventana.
+	 * Método que borra la visualización de mensajes en la ventana.
 	 */
 	public void cleanMensaje() {
 		mensaje.setOpaque(false);
@@ -231,14 +254,14 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * MÃ©todo que deja limpios todos los campos
+	 * Método que deja limpios todos los campos
 	 */
 	public void borrarCampos() {
 		textID.setText("");
 		textNombre.setText("");
 		textPrecio.setText("");
-		textDate.setText("");
 		textObserva.setText("");
+		mostrarIdDefecto(textID);
 	}
 
 	/**
@@ -251,19 +274,20 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Poner fecha del dÃ­a actual. La idea es que te muestre por defecto la fecha
+	 * Poner fecha del día actual. La idea es que te muestre por defecto la fecha
 	 * actual para que no tengas que ponerla a mano.
 	 */
 
-	public void mostrarFechaActual() {
+	public String mostrarFechaActual() {
 		Date fechaHoy = new Date();
 		String fechaF = new SimpleDateFormat("yyyy-MM-dd").format(fechaHoy);
 
 		textDate.setText(fechaF);
+		return fechaF;
 	}
 
 	/**
-	 * MÃ©todo que muestra el id del Ãºltimo producto en la BDDD.
+	 * Método que muestra el id del último producto en la BDDD.
 	 * 
 	 * @param textid_producto
 	 */
@@ -340,6 +364,8 @@ public class VentanaPrincipal extends JFrame {
 
 						} else {
 
+							int combo = textCombo.getSelectedIndex();
+
 							String nombre = textNombre.getText();
 							Float precio = Float.parseFloat(textPrecio.getText());
 
@@ -349,6 +375,8 @@ public class VentanaPrincipal extends JFrame {
 							s.executeUpdate("INSERT INTO productos (nombre, precio, fecha, observaciones) " + "VALUES('"
 									+ nombre + "', " + precio + ",STR_TO_DATE('" + fecha + "','%Y-%m-%d'),'" + ob
 									+ "')");
+
+							s.executeUpdate("INSERT INTO estado_productos VALUES(" + id + ", " + combo + ")");
 
 							c.cerrarConexion();
 
@@ -391,8 +419,8 @@ public class VentanaPrincipal extends JFrame {
 
 					Integer id = Integer.parseInt(textID.getText());
 
-					String update = "UPDATE productos SET nombre=?, precio=?, fecha=?, observaciones=? WHERE id_producto="
-							+ id;
+					String update = "UPDATE productos INNER JOIN estado_productos ON productos.id_producto=estado_productos.id_producto SET productos.nombre=?, productos.precio=?, productos.fecha=?, productos.observaciones=?, estado_productos.nuevo=? "
+							+ "WHERE productos.id_producto=" + id + " and estado_productos.id_producto=" + id;
 
 					String query = "SELECT id_producto FROM productos WHERE id_producto=" + id;
 
@@ -410,6 +438,7 @@ public class VentanaPrincipal extends JFrame {
 							prepare.setFloat(2, Float.parseFloat(textPrecio.getText()));
 							prepare.setDate(3, java.sql.Date.valueOf(textDate.getText()));
 							prepare.setString(4, textObserva.getText());
+							prepare.setInt(5, textCombo.getSelectedIndex());
 							prepare.executeUpdate();
 
 							lanzarMensaje("Registro actualizado correctamente.", false);
@@ -457,7 +486,7 @@ public class VentanaPrincipal extends JFrame {
 					String query = "SELECT id_producto FROM productos WHERE id_producto=?";
 					PreparedStatement prepare = c.getPreparedStatement(query);
 
-					String query2 = "SELECT * FROM productos WHERE id_producto=?";
+					String query2 = "SELECT * FROM productos, estado_productos WHERE productos.id_producto=? and estado_productos.id_producto=?";
 					PreparedStatement prepare2 = c.getPreparedStatement(query2);
 
 					try {
@@ -467,15 +496,19 @@ public class VentanaPrincipal extends JFrame {
 						ResultSet r = prepare.executeQuery();
 
 						r.next();
+
 						if (r.getRow() < 1) {
 							lanzarMensaje("No existe el registro para consultar.", true);
 
 						} else {
 
 							prepare2.setInt(1, Integer.parseInt(textID.getText()));
+							prepare2.setInt(2, Integer.parseInt(textID.getText()));
+
 							ResultSet r2 = prepare2.executeQuery();
 
 							String nombre = "", fecha = "", observa = "";
+							int producto = 0;
 							Float precio = null;
 
 							while (r2.next()) {
@@ -483,12 +516,14 @@ public class VentanaPrincipal extends JFrame {
 								precio = r2.getFloat("precio");
 								fecha = r2.getString("fecha");
 								observa = r2.getString("observaciones");
+								producto = r2.getInt("nuevo");
 							}
 
 							textNombre.setText(nombre);
 							textDate.setText(fecha);
 							textPrecio.setText(Float.toString(precio));
 							textObserva.setText(observa);
+							textCombo.setSelectedIndex(producto);
 
 							if (prepare2 != null) {
 								prepare2.close();
@@ -532,7 +567,7 @@ public class VentanaPrincipal extends JFrame {
 					String query = "SELECT id_producto FROM productos WHERE id_producto=?";
 					PreparedStatement prepare = c.getPreparedStatement(query);
 
-					String deletequery = "DELETE FROM productos WHERE id_producto=?";
+					String deletequery = "DELETE p, e FROM productos p, estado_productos e WHERE p.id_producto=? and e.id_producto=?";
 					PreparedStatement prepareDelete = c.getPreparedStatement(deletequery);
 
 					Integer id = Integer.parseInt(textID.getText());
@@ -546,10 +581,11 @@ public class VentanaPrincipal extends JFrame {
 
 						} else {
 							int opcion = JOptionPane.showConfirmDialog(VentanaPrincipal.this,
-									"Â¿Desea confirmar el borrado?");
+									"¿Desea confirmar el borrado?");
 
 							if (opcion == JOptionPane.YES_OPTION) {
 								prepareDelete.setInt(1, id);
+								prepareDelete.setInt(2, id);
 								prepareDelete.executeUpdate();
 								lanzarMensaje("Borrado correctamente", false);
 								borrarCampos();
@@ -573,6 +609,63 @@ public class VentanaPrincipal extends JFrame {
 					}
 
 				}
+			}
+		});
+
+	}
+
+	public void exportar() {
+
+		btnExportar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				String fech = mostrarFechaActual();
+
+				File archivo = new File("resources/Alumnos_(" + fech + ").txt");
+
+				Conexion c = new Conexion();
+				String query = "SELECT * FROM productos, estado_productos WHERE productos.id_producto=estado_productos.id_producto";
+				Statement pr = c.getSatatement();
+
+				ResultSet r;
+				int id_producto = 0;
+				String nombre = "", fecha, observaciones, estado = "";
+				Float precio;
+				int nuevo = 0;
+				try {
+					r = pr.executeQuery(query);
+
+					BufferedWriter escritor = new BufferedWriter(new FileWriter(archivo, true));
+
+					while (r.next()) {
+						id_producto = r.getInt("id_producto");
+						nombre = r.getString("nombre");
+						fecha = r.getString("fecha");
+						precio = r.getFloat("precio");
+						observaciones = r.getString("observaciones");
+						nuevo = r.getInt("nuevo");
+
+						if (nuevo == 0) {
+							estado = "Nuevo";
+						} else {
+							estado = "Segundamano";
+						}
+
+						escritor.write(id_producto + "," + nombre + "," + fecha + "," + precio + "," + observaciones
+								+ "," + estado + ";\n");
+
+					}
+					escritor.flush();
+					escritor.close();
+					lanzarMensaje("Exportado correctamente", false);
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+
 			}
 		});
 
