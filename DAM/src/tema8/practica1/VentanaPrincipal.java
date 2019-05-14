@@ -5,6 +5,12 @@ import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -25,14 +32,6 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * 
@@ -69,7 +68,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Método que coloca todos los componentes en la ventana
+	 * Mï¿½todo que coloca todos los componentes en la ventana
 	 */
 	public void initComponentes() {
 
@@ -214,7 +213,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Acción del botón limpiar
+	 * Acciï¿½n del botï¿½n limpiar
 	 */
 	public void limpiar() {
 		btnLimpiar.addActionListener(new ActionListener() {
@@ -225,7 +224,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Método que inserta mensajes de error o información en la ventana
+	 * Mï¿½todo que inserta mensajes de error o informaciï¿½n en la ventana
 	 * 
 	 * @param mensaje a mostrar
 	 * @param         error, si se trata de un mensaje de error o no.
@@ -246,7 +245,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Método que borra la visualización de mensajes en la ventana.
+	 * Mï¿½todo que borra la visualizaciï¿½n de mensajes en la ventana.
 	 */
 	public void cleanMensaje() {
 		mensaje.setOpaque(false);
@@ -254,7 +253,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Método que deja limpios todos los campos
+	 * Mï¿½todo que deja limpios todos los campos
 	 */
 	public void borrarCampos() {
 		textID.setText("");
@@ -274,7 +273,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Poner fecha del día actual. La idea es que te muestre por defecto la fecha
+	 * Poner fecha del dï¿½a actual. La idea es que te muestre por defecto la fecha
 	 * actual para que no tengas que ponerla a mano.
 	 */
 
@@ -287,7 +286,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Método que muestra el id del último producto en la BDDD.
+	 * Mï¿½todo que muestra el id del ï¿½ltimo producto en la BDDD.
 	 * 
 	 * @param textid_producto
 	 */
@@ -581,7 +580,7 @@ public class VentanaPrincipal extends JFrame {
 
 						} else {
 							int opcion = JOptionPane.showConfirmDialog(VentanaPrincipal.this,
-									"¿Desea confirmar el borrado?");
+									"ï¿½Desea confirmar el borrado?");
 
 							if (opcion == JOptionPane.YES_OPTION) {
 								prepareDelete.setInt(1, id);
