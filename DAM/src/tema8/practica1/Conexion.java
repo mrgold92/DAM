@@ -23,7 +23,7 @@ public class Conexion {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda?useSSL=true&requireSSL=false", "root", "");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda", "root", "");
 			sta = conn.createStatement();
 
 		} catch (SQLException e) {
