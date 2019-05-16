@@ -1,9 +1,10 @@
 package tema8.practica2;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
-import javax.naming.directory.ModificationItem;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
 
 public class Zoo extends JFrame {
 
@@ -28,6 +28,7 @@ public class Zoo extends JFrame {
 	private JLabel mensaje;
 	private JButton btnEditar;
 	private JButton btnBorrar;
+	private JButton btnImportar;
 
 	public Zoo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,7 +100,7 @@ public class Zoo extends JFrame {
 		btnConsultar = new JButton("CONSULTAR");
 		btnConsultar.setForeground(new Color(255, 255, 255));
 		btnConsultar.setBackground(new Color(244, 164, 96));
-		btnConsultar.setBounds(236, 304, 107, 23);
+		btnConsultar.setBounds(221, 304, 132, 23);
 		contentPane.add(btnConsultar);
 
 		btnBaja = new JButton("BAJA");
@@ -114,12 +115,13 @@ public class Zoo extends JFrame {
 		btnEditar.setBounds(504, 304, 89, 23);
 		contentPane.add(btnEditar);
 
-		JButton btnImportar = new JButton("IMPORTAR");
+		btnImportar = new JButton("IMPORTAR");
 		btnImportar.setBounds(541, 22, 136, 23);
 		contentPane.add(btnImportar);
 
 		mensaje = new JLabel("");
-		mensaje.setBounds(106, 363, 487, 23);
+		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
+		mensaje.setBounds(106, 339, 487, 47);
 		contentPane.add(mensaje);
 		setVisible(true);
 
@@ -129,13 +131,16 @@ public class Zoo extends JFrame {
 		btnBorrar.setForeground(new Color(255, 255, 255));
 		btnBorrar.setBackground(new Color(0, 51, 51));
 		btnBorrar.setFocusable(false);
-		btnBorrar.setBounds(28, 22, 89, 23);
+		btnBorrar.setBounds(28, 22, 113, 23);
 		contentPane.add(btnBorrar);
+
+		// ACCIONES
 		alta(a);
 		consulta(a);
 		baja(a);
 		modificar(a);
 		borrar();
+		subir(a);
 
 	}
 
@@ -147,6 +152,8 @@ public class Zoo extends JFrame {
 				textID.setText("");
 				textTipoComida.setText("");
 				textEdad.setText("");
+				mensaje.setOpaque(false);
+				mensaje.setText("");
 			}
 		});
 	}
@@ -155,17 +162,27 @@ public class Zoo extends JFrame {
 
 		btnAlta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String nombre = textNombre.getText();
-				Integer edad = Integer.parseInt(textEdad.getText());
-				String tipo_comida = textTipoComida.getText();
-				int cantidad_c = Integer.parseInt(textCantidadComida.getText());
 
-				a.setNombre(nombre);
-				a.setEdad(edad);
-				a.setTipo_comida(tipo_comida);
-				a.setKg_comida(cantidad_c);
+				if (textNombre.getText().equals("") || textEdad.getText().equals("") || textTipoComida.equals("")
+						|| textCantidadComida.getText().equals("")) {
+					mensaje.setOpaque(true);
+					mensaje.setBackground(new Color(163, 66, 55));
+					mensaje.setForeground(Color.white);
+					mensaje.setText("Debes rellenar todos los campos");
+				} else {
 
-				a.alta();
+					String nombre = textNombre.getText();
+					Integer edad = Integer.parseInt(textEdad.getText());
+					String tipo_comida = textTipoComida.getText();
+					int cantidad_c = Integer.parseInt(textCantidadComida.getText());
+
+					a.setNombre(nombre);
+					a.setEdad(edad);
+					a.setTipo_comida(tipo_comida);
+					a.setKg_comida(cantidad_c);
+
+					a.alta();
+				}
 
 			}
 		});
@@ -177,20 +194,27 @@ public class Zoo extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String nombre = textNombre.getText();
-				Integer edad = Integer.parseInt(textEdad.getText());
 
-				a.setNombre(nombre);
-				a.setEdad(edad);
+				if (textNombre.getText().equals("") || textEdad.getText().equals("")) {
+					mensaje.setOpaque(true);
+					mensaje.setBackground(Color.red);
+					mensaje.setForeground(Color.white);
+					mensaje.setText("Introduce el nombre y la edad");
 
-				if(a.consultar()) {
-					textID.setText(Integer.toString(a.getId()));
-					textNombre.setText(a.getNombre());
-					textEdad.setText(Integer.toString(a.getEdad()));
-					textTipoComida.setText(a.getTipo_comida());
-					textCantidadComida.setText(Integer.toString(a.getKg_comida()));
+				} else {
+					String nombre = textNombre.getText();
+					Integer edad = Integer.parseInt(textEdad.getText());
+					a.setNombre(nombre);
+					a.setEdad(edad);
+
+					if (a.consultar()) {
+						textID.setText(Integer.toString(a.getId()));
+						textNombre.setText(a.getNombre());
+						textEdad.setText(Integer.toString(a.getEdad()));
+						textTipoComida.setText(a.getTipo_comida());
+						textCantidadComida.setText(Integer.toString(a.getKg_comida()));
+					}
 				}
-			
 
 			}
 		});
@@ -235,4 +259,23 @@ public class Zoo extends JFrame {
 		});
 	}
 
+	public void subir(Animales a) {
+		btnImportar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LeerFichero fichero = new LeerFichero(new File("resources/zoo.json"));
+				textNombre.setText(fichero.getNombre());
+				textEdad.setText(Integer.toString(fichero.getEdad()));
+				textTipoComida.setText(fichero.getTipo_comida());
+				textCantidadComida.setText(Integer.toString(fichero.getCantidad_comida()));
+
+				a.setNombre(fichero.getNombre());
+				a.setEdad(fichero.getEdad());
+				a.setTipo_comida(fichero.getTipo_comida());
+				a.setKg_comida(fichero.getCantidad_comida());
+
+				a.alta();
+			}
+		});
+	}
 }

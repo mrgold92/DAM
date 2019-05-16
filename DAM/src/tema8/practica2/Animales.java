@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.xml.ws.AsyncHandler;
 
 public class Animales {
 
@@ -58,18 +57,18 @@ public class Animales {
 		this.kg_comida = kg_comida;
 	}
 
-	// métodos
+	// mÃ©todos
 
 	public void lanzarMensaje(String mensaje, boolean error) {
 
 		if (error) {
 			this.mensaje.setOpaque(true);
-			this.mensaje.setBackground(Color.red);
+			this.mensaje.setBackground(new Color(163, 66, 55));
 			this.mensaje.setForeground(Color.white);
 			this.mensaje.setText(mensaje);
 		} else {
 			this.mensaje.setOpaque(true);
-			this.mensaje.setBackground(Color.green);
+			this.mensaje.setBackground(new Color(68, 140, 44));
 			this.mensaje.setForeground(Color.white);
 			this.mensaje.setText(mensaje);
 		}
@@ -106,7 +105,7 @@ public class Animales {
 			ResultSet resultado = query.executeQuery();
 
 			if (!resultado.next()) {
-				lanzarMensaje("No hemos enconrado el código con ese nombre y edad", true);
+				lanzarMensaje("No hemos enconrado el cÃ³digo con ese nombre y edad", true);
 			} else {
 				id = resultado.getInt("id");
 			}
@@ -232,7 +231,7 @@ public class Animales {
 
 			} else {
 
-				int opcion = JOptionPane.showConfirmDialog(null, "¿Quiere borrarlo definitivamente?");
+				int opcion = JOptionPane.showConfirmDialog(null, "ï¿½Quiere borrarlo definitivamente?");
 
 				if (opcion == JOptionPane.YES_OPTION) {
 					PreparedStatement query2 = con.prepareStatement("DELETE FROM animales WHERE id=" + getId());
