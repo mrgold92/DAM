@@ -3,8 +3,6 @@ package tema8.practica1;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -57,7 +55,7 @@ public class Crud {
 	}
 
 	/**
-	 * Acci�n del bot�n limpiar
+	 * Acción del botón limpiar
 	 */
 	public void limpiar() {
 		btnLimpiar.addActionListener(new ActionListener() {
@@ -75,6 +73,7 @@ public class Crud {
 		textNombre.setText("");
 		textPrecio.setText("");
 		textObserva.setText("");
+		cleanMensaje();
 		mostrarIdDefecto(textID);
 	}
 
@@ -88,7 +87,7 @@ public class Crud {
 	}
 
 	/**
-	 * Poner fecha del d�a actual. La idea es que te muestre por defecto la fecha
+	 * Poner fecha del día actual. La idea es que te muestre por defecto la fecha
 	 * actual para que no tengas que ponerla a mano.
 	 */
 
@@ -101,7 +100,7 @@ public class Crud {
 	}
 
 	/**
-	 * M�todo que muestra el id del �ltimo producto en la BDDD.
+	 * Método que muestra el id del último producto en la BDDD.
 	 * 
 	 * @param textid_producto
 	 */
@@ -114,8 +113,8 @@ public class Crud {
 		try {
 			ResultSet resultado = sta
 					.executeQuery("SELECT id_producto FROM productos ORDER BY id_producto DESC LIMIT 1 ");
-			resultado.next();
-			if (resultado.getRow() > 0) {
+
+			if (resultado.next()) {
 				String c1 = Integer.toString(resultado.getInt("id_producto"));
 				textid_producto.setText(c1);
 			} else {
@@ -200,9 +199,7 @@ public class Crud {
 						Integer id = Integer.parseInt(textID.getText());
 						result = s.executeQuery("SELECT id_producto FROM productos WHERE id_producto=" + id);
 
-						result.next();
-
-						if (result.getRow() > 0) {
+						if (result.next()) {
 							lanzarMensaje("El producto ya existe.", true);
 
 						} else {
@@ -271,8 +268,7 @@ public class Crud {
 
 						r = sta.executeQuery(query);
 
-						r.next();
-						if (r.getRow() < 1) {
+						if (!r.next()) {
 							lanzarMensaje("No existe el registro para poder cambiarlo.", true);
 
 						} else {
@@ -338,9 +334,7 @@ public class Crud {
 
 						ResultSet r = prepare.executeQuery();
 
-						r.next();
-
-						if (r.getRow() < 1) {
+						if (!r.next()) {
 							lanzarMensaje("No existe el registro para consultar.", true);
 
 						} else {
@@ -362,6 +356,7 @@ public class Crud {
 								producto = r2.getInt("nuevo");
 							}
 
+							System.out.println(precio);
 							textNombre.setText(nombre);
 							textDate.setText(fecha);
 							textPrecio.setText(Float.toString(precio));
@@ -418,9 +413,8 @@ public class Crud {
 						prepare.setInt(1, id);
 						ResultSet r = prepare.executeQuery();
 
-						r.next();
-						if (r.getRow() < 1) {
-							JOptionPane.showMessageDialog(null, "No existe el registro para consultar.");
+						if (!r.next()) {
+							lanzarMensaje("No existe el registro para eliminar", true);
 
 						} else {
 							int opcion = JOptionPane.showConfirmDialog(null, "¿Desea confirmar el borrado?");
@@ -458,9 +452,10 @@ public class Crud {
 
 	public void exportar() {
 
-		btnExportar.addMouseListener(new MouseAdapter() {
+		btnExportar.addActionListener(new ActionListener() {
+
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 
 				String fech = mostrarFechaActual();
 
@@ -502,8 +497,8 @@ public class Crud {
 					escritor.close();
 					lanzarMensaje("Exportado correctamente", false);
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException eq) {
+					eq.printStackTrace();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

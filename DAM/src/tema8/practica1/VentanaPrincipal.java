@@ -54,7 +54,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * M�todo que coloca todos los componentes en la ventana
+	 * Método que coloca todos los componentes en la ventana
 	 */
 	public void initComponentes() {
 
@@ -142,13 +142,8 @@ public class VentanaPrincipal extends JFrame {
 		menuBar.add(btnFile);
 
 		JMenuItem btnFileSalir = new JMenuItem("Salir");
-		btnFileSalir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+		btnFileSalir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 		btnFile.add(btnFileSalir);
-
-		btnExportar = new JMenu("Exportar");
-
-		btnExportar.setForeground(Color.WHITE);
-		menuBar.add(btnExportar);
 
 		JLabel lblFecha = new JLabel("FECHA");
 		lblFecha.setBounds(102, 218, 58, 15);
@@ -185,6 +180,11 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(textCombo);
 
 		setVisible(true);
+
+		btnExportar = new JMenuItem("Exportar");
+		btnExportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+		btnFile.add(btnExportar);
+		btnExportar.setForeground(Color.BLACK);
 
 		Crud crud = new Crud(textID, textNombre, textPrecio, textDate, textObserva, textCombo, mensaje, btnExportar,
 				btnLimpiar, this, btnFileSalir);
