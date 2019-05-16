@@ -3,6 +3,7 @@ package tema8.practica2;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.naming.directory.ModificationItem;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
 public class Zoo extends JFrame {
 
@@ -22,96 +24,134 @@ public class Zoo extends JFrame {
 	private JTextField textCantidadComida;
 	private JButton btnAlta;
 	private JButton btnConsultar;
+	private JButton btnBaja;
+	private JLabel mensaje;
+	private JButton btnEditar;
+	private JButton btnBorrar;
 
 	public Zoo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 612, 457);
+		setBounds(100, 100, 703, 457);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 
 		JLabel lblZoolgico = new JLabel("ZOOL\u00D3GICO");
 		lblZoolgico.setHorizontalAlignment(SwingConstants.CENTER);
-		lblZoolgico.setBounds(239, 26, 83, 14);
+		lblZoolgico.setBounds(239, 26, 201, 14);
 		contentPane.add(lblZoolgico);
 
 		JLabel lblNombre = new JLabel("NOMBRE");
-		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombre.setBounds(84, 138, 46, 14);
+		lblNombre.setBounds(84, 138, 194, 14);
 		contentPane.add(lblNombre);
 
 		JLabel lblEdad = new JLabel("EDAD");
-		lblEdad.setBounds(84, 162, 46, 14);
+		lblEdad.setBounds(84, 162, 194, 14);
 		contentPane.add(lblEdad);
 
 		JLabel lblTipoDeComida = new JLabel("TIPO DE COMIDA");
-		lblTipoDeComida.setBounds(84, 187, 84, 14);
+		lblTipoDeComida.setBounds(84, 187, 194, 14);
 		contentPane.add(lblTipoDeComida);
 
 		JLabel lblCantidadDeComida = new JLabel("CANTIDAD DE COMIDA (KG)");
-		lblCantidadDeComida.setBounds(84, 212, 154, 14);
+		lblCantidadDeComida.setBounds(84, 212, 194, 14);
 		contentPane.add(lblCantidadDeComida);
 
 		JLabel lblIdentificacin = new JLabel("IDENTIFICACI\u00D3N");
-		lblIdentificacin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIdentificacin.setBounds(84, 113, 84, 14);
+		lblIdentificacin.setBounds(84, 113, 194, 14);
 		contentPane.add(lblIdentificacin);
 
 		textID = new JTextField();
 		textID.setEditable(false);
-		textID.setBounds(247, 110, 163, 20);
+		textID.setBounds(284, 107, 258, 20);
 		contentPane.add(textID);
 		textID.setColumns(10);
 
 		textNombre = new JTextField();
-		textNombre.setBounds(247, 135, 163, 20);
+		textNombre.setBounds(284, 132, 258, 20);
 		contentPane.add(textNombre);
 		textNombre.setColumns(10);
 
 		textEdad = new JTextField();
-		textEdad.setBounds(247, 159, 163, 20);
+		textEdad.setBounds(284, 156, 258, 20);
 		contentPane.add(textEdad);
 		textEdad.setColumns(10);
 
 		textTipoComida = new JTextField();
-		textTipoComida.setBounds(247, 184, 163, 20);
+		textTipoComida.setBounds(284, 181, 258, 20);
 		contentPane.add(textTipoComida);
 		textTipoComida.setColumns(10);
 
 		textCantidadComida = new JTextField();
-		textCantidadComida.setBounds(248, 209, 162, 20);
+		textCantidadComida.setBounds(285, 206, 257, 20);
 		contentPane.add(textCantidadComida);
 		textCantidadComida.setColumns(10);
 
 		btnAlta = new JButton("ALTA");
+		btnAlta.setForeground(new Color(255, 255, 255));
+		btnAlta.setBackground(new Color(46, 139, 87));
 
-		btnAlta.setBounds(84, 304, 89, 23);
+		btnAlta.setBounds(106, 304, 89, 23);
 		contentPane.add(btnAlta);
 
 		btnConsultar = new JButton("CONSULTAR");
-		btnConsultar.setBounds(183, 304, 107, 23);
+		btnConsultar.setForeground(new Color(255, 255, 255));
+		btnConsultar.setBackground(new Color(244, 164, 96));
+		btnConsultar.setBounds(236, 304, 107, 23);
 		contentPane.add(btnConsultar);
 
-		JButton btnBaja = new JButton("BAJA");
-		btnBaja.setBounds(300, 304, 89, 23);
+		btnBaja = new JButton("BAJA");
+		btnBaja.setForeground(new Color(255, 255, 255));
+		btnBaja.setBackground(new Color(178, 34, 34));
+		btnBaja.setBounds(380, 304, 89, 23);
 		contentPane.add(btnBaja);
 
-		JButton btnEditar = new JButton("EDITAR");
-		btnEditar.setBounds(399, 304, 89, 23);
+		btnEditar = new JButton("EDITAR");
+		btnEditar.setForeground(new Color(255, 255, 255));
+		btnEditar.setBackground(new Color(0, 139, 139));
+		btnEditar.setBounds(504, 304, 89, 23);
 		contentPane.add(btnEditar);
 
 		JButton btnImportar = new JButton("IMPORTAR");
-		btnImportar.setBounds(497, 22, 89, 23);
+		btnImportar.setBounds(541, 22, 136, 23);
 		contentPane.add(btnImportar);
+
+		mensaje = new JLabel("");
+		mensaje.setBounds(106, 363, 487, 23);
+		contentPane.add(mensaje);
 		setVisible(true);
 
-		alta();
-		consulta();
+		Animales a = new Animales(mensaje);
+
+		btnBorrar = new JButton("BORRAR");
+		btnBorrar.setForeground(new Color(255, 255, 255));
+		btnBorrar.setBackground(new Color(0, 51, 51));
+		btnBorrar.setFocusable(false);
+		btnBorrar.setBounds(28, 22, 89, 23);
+		contentPane.add(btnBorrar);
+		alta(a);
+		consulta(a);
+		baja(a);
+		modificar(a);
+		borrar();
 
 	}
 
-	public void alta() {
+	public void borrar() {
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textNombre.setText("");
+				textCantidadComida.setText("");
+				textID.setText("");
+				textTipoComida.setText("");
+				textEdad.setText("");
+			}
+		});
+	}
+
+	public void alta(Animales a) {
 
 		btnAlta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -119,7 +159,11 @@ public class Zoo extends JFrame {
 				Integer edad = Integer.parseInt(textEdad.getText());
 				String tipo_comida = textTipoComida.getText();
 				int cantidad_c = Integer.parseInt(textCantidadComida.getText());
-				Animales a = new Animales(nombre, edad, tipo_comida, cantidad_c);
+
+				a.setNombre(nombre);
+				a.setEdad(edad);
+				a.setTipo_comida(tipo_comida);
+				a.setKg_comida(cantidad_c);
 
 				a.alta();
 
@@ -127,7 +171,7 @@ public class Zoo extends JFrame {
 		});
 	}
 
-	public void consulta() {
+	public void consulta(Animales a) {
 
 		btnConsultar.addActionListener(new ActionListener() {
 
@@ -136,19 +180,59 @@ public class Zoo extends JFrame {
 				String nombre = textNombre.getText();
 				Integer edad = Integer.parseInt(textEdad.getText());
 
-				Animales a = new Animales(nombre, edad);
+				a.setNombre(nombre);
+				a.setEdad(edad);
 
-				a.consultar();
-
-				textID.setText(Integer.toString(a.getId()));
-				textNombre.setText(a.getNombre());
-				textEdad.setText(Integer.toString(a.getEdad()));
-				textTipoComida.setText(a.getTipo_comida());
-				textCantidadComida.setText(Integer.toString(a.getKg_comida()));
+				if(a.consultar()) {
+					textID.setText(Integer.toString(a.getId()));
+					textNombre.setText(a.getNombre());
+					textEdad.setText(Integer.toString(a.getEdad()));
+					textTipoComida.setText(a.getTipo_comida());
+					textCantidadComida.setText(Integer.toString(a.getKg_comida()));
+				}
+			
 
 			}
 		});
 
+	}
+
+	public void baja(Animales a) {
+		btnBaja.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String nombre = textNombre.getText();
+				Integer edad = Integer.parseInt(textEdad.getText());
+
+				a.setNombre(nombre);
+				a.setEdad(edad);
+
+				a.baja();
+			}
+		});
+	}
+
+	public void modificar(Animales a) {
+
+		btnEditar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nombre = textNombre.getText();
+				Integer edad = Integer.parseInt(textEdad.getText());
+				String tipo_comida = textTipoComida.getText();
+				int cantidad_c = Integer.parseInt(textCantidadComida.getText());
+
+				a.setNombre(nombre);
+				a.setEdad(edad);
+				a.setKg_comida(cantidad_c);
+				a.setTipo_comida(tipo_comida);
+
+				a.modificar();
+
+			}
+		});
 	}
 
 }

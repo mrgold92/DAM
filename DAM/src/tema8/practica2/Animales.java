@@ -1,10 +1,15 @@
 package tema8.practica2;
 
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.xml.ws.AsyncHandler;
 
 public class Animales {
 
@@ -14,18 +19,11 @@ public class Animales {
 	private String tipo_comida;
 	private int kg_comida;
 	private Connection con;
+	private JLabel mensaje;
 
-	public Animales(String nombre, int edad, String tipo_comida, int kg_comida) {
+	public Animales(JLabel mensaje) {
 
-		this.nombre = nombre;
-		this.edad = edad;
-		this.tipo_comida = tipo_comida;
-		this.kg_comida = kg_comida;
-	}
-
-	public Animales(String nombre, int edad) {
-		this.nombre = nombre;
-		this.edad = edad;
+		this.mensaje = mensaje;
 	}
 
 	public String getNombre() {
@@ -62,6 +60,22 @@ public class Animales {
 
 	// métodos
 
+	public void lanzarMensaje(String mensaje, boolean error) {
+
+		if (error) {
+			this.mensaje.setOpaque(true);
+			this.mensaje.setBackground(Color.red);
+			this.mensaje.setForeground(Color.white);
+			this.mensaje.setText(mensaje);
+		} else {
+			this.mensaje.setOpaque(true);
+			this.mensaje.setBackground(Color.green);
+			this.mensaje.setForeground(Color.white);
+			this.mensaje.setText(mensaje);
+		}
+
+	}
+
 	public Connection conectar() {
 		Connection conn = null;
 		try {
@@ -72,6 +86,11 @@ public class Animales {
 		}
 		return conn;
 
+	}
+
+	public void setOpaque() {
+		mensaje.setText("");
+		mensaje.setOpaque(false);
 	}
 
 	public int getId() {
@@ -87,12 +106,10 @@ public class Animales {
 			ResultSet resultado = query.executeQuery();
 
 			if (!resultado.next()) {
-				// lanzarMensaje("No hemos enconrado el código con ese nombre y edad", true);
+				lanzarMensaje("No hemos enconrado el código con ese nombre y edad", true);
 			} else {
 				id = resultado.getInt("id");
 			}
-
-			con.close();
 
 		} catch (SQLException e) {
 
@@ -104,6 +121,7 @@ public class Animales {
 	}
 
 	public void alta() {
+		setOpaque();
 		try {
 
 			con = conectar();
@@ -114,8 +132,8 @@ public class Animales {
 
 			ResultSet resultado = query.executeQuery();
 
-			if (!resultado.next()) {
-				// lanzarMensaje("Ya existe el animal en la Base de Datos.", true);
+			if (resultado.next()) {
+				lanzarMensaje("Ya existe el animal en la Base de Datos.", true);
 
 			} else {
 
@@ -137,6 +155,8 @@ public class Animales {
 				query3.close();
 				con.close();
 
+				lanzarMensaje("Registrado correctamente", false);
+
 			}
 
 		} catch (SQLException e) {
@@ -144,8 +164,10 @@ public class Animales {
 		}
 	}
 
-	public void consultar() {
+	public boolean consultar() {
+		setOpaque();
 		con = conectar();
+		boolean re = false;
 
 		try {
 			PreparedStatement query = con.prepareStatement("SELECT id FROM animales WHERE nombre=? AND edad=?");
@@ -155,7 +177,8 @@ public class Animales {
 			ResultSet resultado = query.executeQuery();
 
 			if (!resultado.next()) {
-				// lanzarMensaje("No existe este registro", true);
+
+				re = false;
 
 			} else {
 
@@ -171,6 +194,7 @@ public class Animales {
 					tipo_comida = resultado2.getString("tipo_comida");
 					kg_comida = resultado2.getInt("cantidad_comida");
 
+					re = true;
 				}
 				resultado2.close();
 				query2.close();
@@ -182,6 +206,88 @@ public class Animales {
 
 		} catch (SQLException e) {
 
+			e.printStackTrace();
+		}
+
+		if (!re) {
+			lanzarMensaje("No existe este registro", true);
+
+		}
+		return re;
+
+	}
+
+	public void baja() {
+		setOpaque();
+		con = conectar();
+		try {
+			PreparedStatement query = con.prepareStatement("SELECT id FROM animales WHERE nombre=? AND edad=?");
+			query.setString(1, nombre);
+			query.setInt(2, edad);
+
+			ResultSet resultado = query.executeQuery();
+
+			if (!resultado.next()) {
+				lanzarMensaje("No existe este registro", true);
+
+			} else {
+
+				int opcion = JOptionPane.showConfirmDialog(null, "¿Quiere borrarlo definitivamente?");
+
+				if (opcion == JOptionPane.YES_OPTION) {
+					PreparedStatement query2 = con.prepareStatement("DELETE FROM animales WHERE id=" + getId());
+					PreparedStatement query3 = con.prepareStatement("DELETE FROM cantidades WHERE id=" + getId());
+					query2.executeUpdate();
+					query3.executeUpdate();
+					lanzarMensaje("Eliminado correctamente", false);
+				} else {
+					lanzarMensaje("Cancelado borrado", false);
+				}
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void modificar() {
+		setOpaque();
+		con = conectar();
+		try {
+
+			if (!nombre.equals("")) {
+
+				PreparedStatement query = con.prepareStatement("SELECT id FROM animales WHERE nombre=? ");
+				query.setString(1, nombre);
+
+				ResultSet resultado = query.executeQuery();
+
+				if (!resultado.next()) {
+					lanzarMensaje("No existe este registro", true);
+
+				} else {
+
+					PreparedStatement query2 = con
+							.prepareStatement("UPDATE  animales SET nombre=?, edad=?, tipo_comida=? WHERE id=?");
+
+					query2.setString(1, nombre);
+					query2.setInt(2, edad);
+					query2.setString(3, tipo_comida);
+					query2.setInt(4, getId());
+
+					query2.executeUpdate();
+
+					PreparedStatement query3 = con.prepareStatement(
+							"UPDATE  cantidades SET cantidad_comida=" + kg_comida + " where id=" + getId());
+					query3.executeUpdate();
+					lanzarMensaje("Actualizado correctamente", false);
+
+				}
+			} else {
+				lanzarMensaje("Debes introducir el campo nombre", true);
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
