@@ -181,8 +181,11 @@ public class Animales {
 
 			} else {
 
-				PreparedStatement query2 = con
-						.prepareStatement("SELECT * FROM animales a, cantidades c WHERE a.id=c.id");
+				PreparedStatement query2 = con.prepareStatement(
+						"SELECT * FROM animales a, cantidades c WHERE  nombre=? and edad =? and a.id=c.id");
+				query2.setString(1, nombre);
+				query2.setInt(2, edad);
+				
 				ResultSet resultado2 = query2.executeQuery();
 
 				while (resultado2.next()) {
